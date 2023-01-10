@@ -1,2 +1,2 @@
-# BugTracker
-A simple bug tracker to keep track of issues
+# Major
+A simple bug tracker to identify **Major** malfunctions and keep track of issues.
