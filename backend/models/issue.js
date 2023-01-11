@@ -27,7 +27,7 @@ const issueSchema = new Schema(
 //   MODEL USING ISSUE SCHEMA  
 //==============================
 
-const Issue = mongoose.model('User', userSchema);
+const Issue = mongoose.model('Issue', issueSchema);
 
 //===================
 //   EXPORT MODEL  
