@@ -14,11 +14,26 @@ const issueSchema = new Schema(
             type: String,
             required: true
         },
+        work: {
+            type: String,
+        },
         priority: {
             type: Number
         },
         status: {
-            type: Number,
+            type: Number
+        },
+        postedBy:{
+            type: mongoose.ObjectId,
+            ref: 'User'
+        },
+        assignedTo : {
+            type: mongoose.ObjectId,
+            ref: 'User'
+        },
+        closedBy: {
+            type: mongoose.ObjectId,
+            ref: 'User'
         }
     }
 );

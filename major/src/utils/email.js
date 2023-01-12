@@ -1,13 +1,10 @@
 import nodemailer from 'nodemailer';
 
-const SENDER = process.env.MAJOR_ADMIN
-const PASS = process.env.MAJOR_PASS
-const transport = nodemailer.createTransport({
+//USE NODEMAILER WITH CREDENTIALS
+export const transport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: SENDER,
-        pass: PASS
+        user: process.env.MAJOR_ADMIN,
+        pass: process.env.MAJOR_PASS
     }
 });
-
-export default transport 

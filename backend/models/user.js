@@ -24,14 +24,13 @@ const userSchema = new Schema(
         lastName: {
             type: String
         },
-        gender: {
-            type: String
-        },
         userGroup: {
             type: Number
         },
         verified: {
-            type: Boolean
+            type: Boolean,
+            default: false,
+            required: true
         }
     }
 );

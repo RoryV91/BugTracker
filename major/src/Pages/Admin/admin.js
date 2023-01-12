@@ -1,4 +1,4 @@
-import { transport } from '../../../src/utils/email';
+import { transport } from '../../utils/email';
 
 var mailOptions = {
     from: '',
