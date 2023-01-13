@@ -25,7 +25,8 @@ const userSchema = new Schema(
             type: String
         },
         userGroup: {
-            type: Number
+            type: Number,
+            default: 0
         },
         verified: {
             type: Boolean,

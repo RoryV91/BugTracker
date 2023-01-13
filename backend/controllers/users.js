@@ -88,33 +88,35 @@ router.put('/update/:id', security.isAuthenticated, async (req, res) => {
             const hashPassword = await bcrypt.hash(req.body.password, saltRounds)
             updatedUser = {
                 email: req.body.email,
-                passowrd: hashPassword,
+                password: hashPassword,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName
+            }
+        } else {
+            updatedUser = {
+                email: req.body.email,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName
             }
         }
-        updatedUser = {
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
-        }
         User.findOne({ email: req.body.email })
             .then((user) => {
                 if (!user || (req.body.email === user.email)) {
-                    User.findByIdAndUpdate(req.params.id, updatedUser)
-                        if (user) {
+                    User.findByIdAndUpdate(req.params.id, updatedUser, {new: true})
+                        .then((user) => {
                             const payload = {
                                 id: user._id,
                                 email: user.email,
                                 userGroup: user.userGroup,
                                 firstName: user.firstName,
-                                lastName: user.lastName
+                                lastName: user.lastName,
+                                userId: user._id
                             }
                             const token = jwt.encode(payload, process.env.JWTSECRET)
-                            res.json({
-                                token: token
-                            })
-                        }
+                             res.json({
+                                 token: token
+                             })
+                        })
                 } else {
                     res.sendStatus(402)
                 }
@@ -127,52 +129,49 @@ router.put('/update/:id', security.isAuthenticated, async (req, res) => {
 //============================================
 //   UPDATE ROUTE / SETUP INITIAL USER INFO
 //============================================
-router.post('signup/:id', async (req, res) => {
- // Verify the request body has an username and password
- if (req.body.username && req.body.password) {
+router.post('/create/:id', async (req, res) => {
+ if (req.body.password && req.body.firstName && req.body.lastName) {
     const hashPassword = await bcrypt.hash(req.body.password, saltRounds)
-    // Make a new user object with the request body and password
-    let newUser = {
-        email: req.body.username,
-        password: hashPassword
+    let verifyUser = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        password: hashPassword,
+        verified: true
     }
-    // Check if a user exists with the same username and password
-    User.findOne({ username: req.body.username })
+    User.findByIdAndUpdate(req.params.id, verifyUser, { new: true })
         .then((user) => {
-            if (!user) {
-                User.create(newUser)
-                    .then(user => {
-                        if (user) {
-                            const payload = {
-                                id: user._id,
-                                username: user.username
-                            }
-                            const token = jwt.encode(payload, config.jwtSecret)
-                            res.json({
-                                token: token,
-                                username: user.username,
-                                userId: user._id
-                            })
-                        } else {
-                            res.sendStatus(401)
-                        }
-                    })
-                // Send an error if the user already exists
+            if (user) {
+                const payload = {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    userGroup: user.userGroup,
+                    email: user.email,
+                    userId: user._id
+                }
+                const token = jwt.encode(payload, process.env.JWTSECRET)
+                res.json({
+                    token: token,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    userGroup: user.userGroup,
+                    email: user.email,
+                    userId: user._id
+                })
             } else {
                 res.sendStatus(401)
             }
-        })
-    // Send an error if the request body does not have an username and password
-} else {
-    res.sendStatus(401)
+                })
+    } else {
+        res.sendStatus(401)
+    }
 }
-})
+)
 
 
 //================================
 //   DELETE ROUTE / DELETE USER 
 //================================
-router.delete('/delete/:id', /*security.isAdmin,*/ (req, res) => {
+router.delete('/delete/:id', security.isAdmin, (req, res) => {
     db.User.findByIdAndDelete(req.params.id, (err, user) => {
         res.sendStatus(200)
     })

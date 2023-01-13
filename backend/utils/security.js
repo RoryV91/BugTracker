@@ -1,3 +1,10 @@
+//==================
+//   DEPENDENCIES  
+//==================
+const jwt = require('jwt-simple')
+require('dotenv').config();
+const config = require('../config/config')
+
 //DETERMINE IF USER IS AUTHENTICATED
 function isAuthenticated(req, res, next) {
     if (req.headers.authorization) {
@@ -9,6 +16,8 @@ function isAuthenticated(req, res, next) {
 
 //DETERMINE IF USER IS ADMIN GROUP
 function isAdmin(req, res, next) {
+    const tokenString = req.headers.authorization
+    const token = tokenString.replace("Bearer ", "");
     if(req.headers.authorization) {
         const info = jwt.decode(token, process.env.JWTSECRET)
         if (info.userGroup === 2){
@@ -23,6 +32,8 @@ function isAdmin(req, res, next) {
 
 //DETERMINE IS USER IS SUPPORT USER GROUP
 function isSupport(req, res, next) {
+    const tokenString = req.headers.authorization
+    const token = tokenString.replace("Bearer ", "");
     if(req.headers.authorization) {
         const info = jwt.decode(token, process.env.JWTSECRET)
         if (info.userGroup === 1){
