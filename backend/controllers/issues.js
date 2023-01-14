@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const Issue = db.Issue;
-const jwt = require('jwt-simple')
+const jwt = require('jsonwebtoken')
 const passport = require('../config/passport')
 const config = require('../config/config')
 const security = require('../utils/security')
@@ -23,7 +23,7 @@ router.post('/create', security.isAuthenticated, async (req, res) => {
         assignedTo: null,
         closedBy: null
     }
-    Review.create(newIssue)
+    Issue.create(newIssue)
         .then(result => {
             console.log(result)
             res.status(200).json({
@@ -35,7 +35,7 @@ router.post('/create', security.isAuthenticated, async (req, res) => {
 //==========================
 //    ISSUES BY USER ID
 //==========================
-router.get('/user/:id', (req, res) => {
+router.get('/user/:id', security.isAuthenticated, (req, res) => {
     db.User.findById(
         req.params.id,
         (err, user) => {

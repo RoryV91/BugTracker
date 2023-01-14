@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const User = db.User;
-const jwt = require('jwt-simple')
+const jwt = require('jsonwebtoken')
 const passport = require('../config/passport')
 const config = require('../config/config')
 const security = require('../utils/security')
@@ -51,22 +51,48 @@ router.post('/request', async (req, res) => {
 //   LOG IN ROUTE / FIND ONE USER
 //==================================
 router.post('/login', (req, res) => {
-    // Attempt to find the user by their username and password in the database
     if (req.body.email && req.body.password) {
-        User.findOne({ username: req.body.email }, async (err, user) => {
+        User.findOne({ email: req.body.email }, async (err, user) => {
             if (err || user == null) {
+                console.log(req.body.email)
+                console.log(req.body.password)
                 res.sendStatus(404)
             }
-            // check to:
-            // 1. make sure the user was found in the database
-            // 2. make sure the user entered in the correct password
             const match = await bcrypt.compare(req.body.password, user.password)
             if (match === true) {
-                const payload = { id: user._id, username: user.email }
-                const token = jwt.encode(payload, config.jwtSecret)
+                const payload = { 
+                    id: user._id,
+                    email: user.email,
+                    userGroup: user.userGroup,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    userId: user._id
+                }
+                const secOptions = {
+                    expiresIn: "10m", 
+                    algorithm: 'HS256'
+                }
+                const refreshSecOptions ={
+                    expiresIn: "48h",
+                    algorithm: 'HS256'
+                }
+                const accessToken = jwt.sign(
+                    payload, 
+                    process.env.JWTSECRET, 
+                    secOptions
+                )
+                const refreshToken = jwt.sign(
+                    {id: user._id},
+                    process.env.REFRESHJWTSECRET,
+                    refreshSecOptions
+                )
                 res.json({
-                    token: token,
-                    username: user.email,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    userGroup: user.userGroup,
+                    email: user.email,
                     userId: user._id
                 })
             } else {
@@ -112,10 +138,33 @@ router.put('/update/:id', security.isAuthenticated, async (req, res) => {
                                 lastName: user.lastName,
                                 userId: user._id
                             }
-                            const token = jwt.encode(payload, process.env.JWTSECRET)
-                             res.json({
-                                 token: token
-                             })
+                            const secOptions = {
+                                expiresIn: "10m", 
+                                algorithm: 'HS256'
+                            }
+                            const refreshSecOptions ={
+                                expiresIn: "48h",
+                                algorithm: 'HS256'
+                            }
+                            const accessToken = jwt.sign(
+                                payload, 
+                                process.env.JWTSECRET, 
+                                secOptions
+                            )
+                            const refreshToken = jwt.sign(
+                                {id: user._id},
+                                process.env.REFRESHJWTSECRET,
+                                refreshSecOptions
+                            )
+                            res.json({
+                                accessToken: accessToken,
+                                refreshToken: refreshToken,
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                userGroup: user.userGroup,
+                                email: user.email,
+                                userId: user._id
+                            })
                         })
                 } else {
                     res.sendStatus(402)
@@ -148,9 +197,27 @@ router.post('/create/:id', async (req, res) => {
                     email: user.email,
                     userId: user._id
                 }
-                const token = jwt.encode(payload, process.env.JWTSECRET)
+                const secOptions = {
+                    expiresIn: "10m", 
+                    algorithm: 'HS256'
+                }
+                const refreshSecOptions ={
+                    expiresIn: "48h",
+                    algorithm: 'HS256'
+                }
+                const accessToken = jwt.sign(
+                    payload, 
+                    process.env.JWTSECRET, 
+                    secOptions
+                )
+                const refreshToken = jwt.sign(
+                    {id: user._id},
+                    process.env.REFRESHJWTSECRET,
+                    refreshSecOptions
+                )
                 res.json({
-                    token: token,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     userGroup: user.userGroup,
@@ -158,7 +225,7 @@ router.post('/create/:id', async (req, res) => {
                     userId: user._id
                 })
             } else {
-                res.sendStatus(401)
+                res.sendStatus(404)
             }
                 })
     } else {
@@ -166,7 +233,6 @@ router.post('/create/:id', async (req, res) => {
     }
 }
 )
-
 
 //================================
 //   DELETE ROUTE / DELETE USER 
@@ -176,6 +242,70 @@ router.delete('/delete/:id', security.isAdmin, (req, res) => {
         res.sendStatus(200)
     })
 });
+
+//=========================
+//   REFRESH TOKEN ROUTE
+//=========================
+router.post('/refresh_token', async (req, res) => {
+    const tokenString = req.body.refreshToken
+    const token = tokenString.replace("Bearer ", "");
+    if (token) {
+        try {
+            const refresh = await jwt.verify(token, process.env.REFRESHJWTSECRET, {algorithm: ['HS256']})
+            if (!refresh) {
+                res.sendStatus(401)
+            }
+            else {
+                User.findById(token.id, async (err, user) => {
+                    if (err || user == null) {
+                        res.sendStatus(404)
+                    } else {
+                        const payload = { 
+                        id: user._id,
+                        email: user.email,
+                        userGroup: user.userGroup,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        userId: user._id
+                        }
+                        const secOptions = {
+                            expiresIn: "6h", 
+                            algorithm: 'HS256'
+                        }
+                        const accessToken = jwt.sign(
+                            payload, 
+                            process.env.JWTSECRET, 
+                            secOptions
+                        )
+                        res.json({
+                            accessToken: accessToken,
+                            email: user.email,
+                            userGroup: user.userGroup,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            userId: user._id
+                        })
+                    }
+                })
+            }  
+        } catch (e) {
+            res.sendStatus(401)
+        }
+    } else {
+        res.sendStatus(401)
+    }
+});
+
+//======================
+//   ADMIN USER INDEX
+//======================
+router.get('/list', security.isAdmin, async (req, res) => {
+    User.find((err, users) => {
+        res.json({users: users});
+    });
+})
+
+
 
 
 module.exports = router
