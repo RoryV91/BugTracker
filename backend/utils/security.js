@@ -3,7 +3,6 @@
 //==================
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
-const config = require('../config/config')
 
 //DETERMINE IF USER IS AUTHENTICATED
 async function isAuthenticated(req, res, next) {
@@ -31,13 +30,17 @@ async function isAdmin(req, res, next) {
     const tokenString = req.headers.authorization
     const token = tokenString.replace("Bearer ", "");
     if (req.headers.authorization) {
-        const info = await jwt.verify(token, process.env.JWTSECRET, {algorithm: ['HS256']})
-        if (!info) {
-            res.sendStatus(401)
-        }
-        else if (info.userGroup === 2){
-            next()
-        } else {
+        try {
+            const info = await jwt.verify(token, process.env.JWTSECRET, {algorithm: ['HS256']})
+            if (!info) {
+                res.sendStatus(401)
+            }
+            else if (info.userGroup === 2){
+                next()
+            } else {
+                res.sendStatus(401)
+            }
+        } catch (e) {
             res.sendStatus(401)
         }
     } else {
@@ -50,13 +53,17 @@ async function isSupport(req, res, next) {
     const tokenString = req.headers.authorization
     const token = tokenString.replace("Bearer ", "");
     if(req.headers.authorization) {
-        const info = await jwt.verify(token, process.env.JWTSECRET, {algorithm: ['HS256']})
-        if (!info) {
-            res.sendStatus(401)
-        }
-        if (info.userGroup === 1){
-            next()
-        } else {
+        try {
+            const info = await jwt.verify(token, process.env.JWTSECRET, {algorithm: ['HS256']})
+            if (!info) {
+                res.sendStatus(401)
+            }
+            else if (info.userGroup >= 1){
+                next()
+            } else {
+                res.sendStatus(401)
+            }
+        } catch (e) {
             res.sendStatus(401)
         }
     } else {

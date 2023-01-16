@@ -6,8 +6,6 @@ const router = express.Router();
 const db = require('../models');
 const Issue = db.Issue;
 const jwt = require('jsonwebtoken')
-const passport = require('../config/passport')
-const config = require('../config/config')
 const security = require('../utils/security')
 
 //==================
@@ -16,10 +14,11 @@ const security = require('../utils/security')
 router.post('/create', security.isAuthenticated, async (req, res) => {
     const newIssue = {
         description: req.body.description,
-        work: '',
+        summary: req.body.summary,
+        work: [],
         priority: 0,
         status: 0,
-        postedBy: req.body.name,
+        postedBy: req.body.postedBy,
         assignedTo: null,
         closedBy: null
     }
@@ -36,52 +35,120 @@ router.post('/create', security.isAuthenticated, async (req, res) => {
 //    ISSUES BY USER ID
 //==========================
 router.get('/user/:id', security.isAuthenticated, (req, res) => {
-    db.User.findById(
-        req.params.id,
-        (err, user) => {
+    db.Issue.find(
+        { 'postedBy': req.params.id },
+        (err, issues) => {
             if (err) {
                 res.sendStatus(500)
-                console.log(err)
             } else {
-                if (user) {
-                    db.Issue.find(
-                        { 'postedBy': req.params.id },
-                        { description: true, priority: true, work: true, status: true },
-                        (err, issues) => {
-                            const result = {
-                                user: user.email,
-                                issues: [issues]
-                            }
-                            res.json(result)
-                        }
-                    )
+               const result = {
+                    issues: [issues]
                 }
+                res.json(result) 
             }
         }
-    )
+    )  
 })
 
+//==========================
+//    VIEW SINGLE ISSUE
+//==========================
+router.get('/view/:id', security.isAuthenticated, (req, res) => {
+    db.Issue.findById(
+        req.params.id ,
+        (err, issue) => {
+            if (err) {
+                res.sendStatus(500)
+            } else {
+                res.json(issue) 
+            }
+        }
+    )  
+})
+
+//=================================
+//   UPDATE ROUTE FOR BASIC USER
+//=================================
+router.put('/user/update/:id', security.isAuthenticated, async (req, res) => {
+    const updatedIssue = await db.Issue.findByIdAndUpdate(
+    req.params.id,
+    { 
+        description: req.body.description, 
+        summary: req.body.summary
+    },
+    { new: true }
+    );
+    res.json(updatedIssue)
+});
 
 //==============================
-//   UPDATE ROUTE
+//   UPDATE ROUTE FOR SUPPORT
 //==============================
-router.put('/update', security.isSupport, async (req, res) => {
-    if (security.isSupport === true){
-        const updatedIssue = await db.Issue.findByIdAndUpdate(
-        req.body.issueId,
-        { description: req.body.description, work: req.body.work, status: req.body.status, priority: req.body.priority,},
+router.put('/support/update/:id', security.isSupport, async (req, res) => {
+    const updatedIssue = await db.Issue.findByIdAndUpdate(
+    req.params.id,
+    { 
+        description: req.body.description, 
+        summary: req.body.summary,
+        status: req.body.status,
+        priority: req.body.priority,
+        closedBy: req.body.closedBy
+    },
+    { new: true }
+    ).populate({path: 'work', populate: {path: 'supportStaff'}}); 
+    res.json(updatedIssue)
+    
+});
+
+
+//============================
+//   UPDATE ROUTE FOR ADMIN
+//============================
+router.put('/admin/update/:id', security.isAdmin, async (req, res) => {
+    const updatedIssue = await db.Issue.findByIdAndUpdate(
+    req.params.id,
+    { 
+        description: req.body.description, 
+        summary: req.body.summary,
+        status: req.body.status,
+        priority: req.body.priority,
+        assignedTo: req.body.assignedTo,
+        closedBy: req.body.closedBy
+    },
+    { new: true }
+    ).populate({path: 'work', populate: {path: 'supportStaff'}}); 
+    res.json(updatedIssue)
+});
+
+//================================
+//   DELETE WORKITEM FROM ISSUE
+//================================
+router.put('/support/remove/:id', security.isSupport, async (req, res) => {
+    const updatedIssue = await db.Issue.findByIdAndUpdate(
+    req.params.id,
+    { $pull: {
+        work:{ _id: req.body.workItemId } 
+    }
+    },
+    { new: true }
+    ).populate(); 
+    res.json(updatedIssue)
+});
+
+//===========================
+//   ADD WORKITEM TO ISSUE
+//===========================
+router.put('/support/add/:id', security.isSupport, async (req, res) => {
+    const updatedIssue = await db.Issue.findByIdAndUpdate(
+        req.params.id,
+        { $push: {
+            work:{ _id: req.body.workItemId } 
+        }
+        },
         { new: true }
         ); 
         res.json(updatedIssue)
-    } else if (security.isSupport === false){
-        const updatedIssue = await db.Issue.findByIdAndUpdate(
-            req.body.issueId,
-            { description: req.body.description},
-            { new: true }
-            ); 
-            res.json(updatedIssue)
-    }
-});
+    });
 
 
 //==================

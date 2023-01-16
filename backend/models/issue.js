@@ -3,6 +3,7 @@
 //==================
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const workItemSchema = require('./workItem.js')
 
 //==================
 //   ISSUE SCHEMA  
@@ -14,9 +15,14 @@ const issueSchema = new Schema(
             type: String,
             required: true
         },
-        work: {
+        summary: {
             type: String,
+            required: true
         },
+        work: [{
+            type: mongoose.ObjectId,
+            ref: 'WorkItem'
+        }],
         priority: {
             type: Number
         },
@@ -39,7 +45,7 @@ const issueSchema = new Schema(
 );
 
 //==============================
-//   MODEL USING ISSUE SCHEMA  
+//   MODEL USING ISSUE SCHEMA
 //==============================
 
 const Issue = mongoose.model('Issue', issueSchema);

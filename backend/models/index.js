@@ -39,3 +39,4 @@ mongoose.connection.on('error', (error) => {
 
 module.exports.User = require("./user.js");
 module.exports.Issue = require("./issue.js");
+module.exports.WorkItem = require("./workItem.js");

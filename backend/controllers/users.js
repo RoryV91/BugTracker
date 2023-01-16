@@ -6,8 +6,6 @@ const router = express.Router();
 const db = require('../models');
 const User = db.User;
 const jwt = require('jsonwebtoken')
-const passport = require('../config/passport')
-const config = require('../config/config')
 const security = require('../utils/security')
 require('dotenv').config();
 const bcrypt = require('bcrypt');
@@ -69,7 +67,7 @@ router.post('/login', (req, res) => {
                     userId: user._id
                 }
                 const secOptions = {
-                    expiresIn: "10m", 
+                    expiresIn: "60m", 
                     algorithm: 'HS256'
                 }
                 const refreshSecOptions ={
@@ -198,7 +196,7 @@ router.post('/create/:id', async (req, res) => {
                     userId: user._id
                 }
                 const secOptions = {
-                    expiresIn: "10m", 
+                    expiresIn: "60m", 
                     algorithm: 'HS256'
                 }
                 const refreshSecOptions ={
