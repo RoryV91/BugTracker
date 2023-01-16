@@ -31,9 +31,9 @@ router.post('/create', security.isAuthenticated, async (req, res) => {
         })
 });
 
-//==========================
+//========================
 //    ISSUES BY USER ID
-//==========================
+//========================
 router.get('/user/:id', security.isAuthenticated, (req, res) => {
     db.Issue.find(
         { 'postedBy': req.params.id },
@@ -50,9 +50,9 @@ router.get('/user/:id', security.isAuthenticated, (req, res) => {
     )  
 })
 
-//==========================
+//========================
 //    VIEW SINGLE ISSUE
-//==========================
+//========================
 router.get('/view/:id', security.isAuthenticated, (req, res) => {
     db.Issue.findById(
         req.params.id ,
@@ -99,7 +99,6 @@ router.put('/support/update/:id', security.isSupport, async (req, res) => {
     res.json(updatedIssue)
     
 });
-
 
 //============================
 //   UPDATE ROUTE FOR ADMIN
@@ -150,11 +149,9 @@ router.put('/support/add/:id', security.isSupport, async (req, res) => {
         res.json(updatedIssue)
     });
 
-
 //==================
 //   DELETE ROUTE
 //==================
-
 router.delete('/delete/:id', security.isAuthenticated, async (req, res) => {
     Issue.findByIdAndRemove(req.params.id)
         .then(result => {
