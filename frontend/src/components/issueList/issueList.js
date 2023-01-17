@@ -6,7 +6,6 @@ import { getAllIssues } from '../../utils/api'
 const IssueList = () => {
 
     const [issues, setIssues] = useState([]);
-    const [testIssues, setTestIssues] = useState([{"summary": "something", "description": "something"}]);
 
     useEffect(() => {
             let  mounted = true;

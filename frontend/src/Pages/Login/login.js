@@ -39,28 +39,30 @@ const Login = () => {
         <>
             <h1>Log In page</h1>
             <p>This is a page</p>
-            <form>
-                <input 
-                    type="text"
-                    name="email"
-                    onChange={handleChange}
-                    value={loginForm.email}
-                    placeholder="email"
-                />
-                <input
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    value={loginForm.password}
-                    placeholder="Password"
-                />
-                <button 
-                    onClick={(event) => handleSubmit(event, loginForm)}
-                    type="submit"    
-                >
-                    Login
-                </button>
-            </form>
+            <div>
+                <form>
+                    <input 
+                        type="text"
+                        name="email"
+                        onChange={handleChange}
+                        value={loginForm.email}
+                        placeholder="email"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        onChange={handleChange}
+                        value={loginForm.password}
+                        placeholder="Password"
+                    />
+                    <button 
+                        onClick={(event) => handleSubmit(event, loginForm)}
+                        type="submit"    
+                    >
+                        Login
+                    </button>
+                </form>
+            </div>
         </>
     )
 }

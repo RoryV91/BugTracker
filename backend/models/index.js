@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 require("dotenv").config()
 const connectionString = process.env.MONGODBURI
 
-
+console.log(process.env.MONGODBURI)
 mongoose.set('strictQuery', false)
 
 //=======================================
@@ -13,7 +13,7 @@ mongoose.set('strictQuery', false)
 //=======================================
 
 mongoose.connect(
-    connectionString,
+    process.env.MONGODBURI,
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 

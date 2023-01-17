@@ -8,9 +8,9 @@ import {useState, useEffect} from 'react';
 
 //COMPONENTS
 //import Nav from './components/Nav';
-import EditIssue from './components/editIssue/editIssue';
+import EditIssue from './Pages/editIssue/editIssue';
 import IssueList from './components/issueList/issueList';
-import NewIssue from './components/newIssue/newIssue';
+import NewIssue from './Pages/newIssue/newIssue';
 import newUserList from './components/newUserList/newUserList';
 
 //PAGES

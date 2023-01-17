@@ -4,22 +4,29 @@
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const db = require('./');
+const mongoose = require('mongoose')
+require('dotenv').config();
 const User = db.User;
-const Issue = db.Issue;
+mongoose.set('strictQuery', false)
 
-async function hashPassword(plainPassword) {
-    const newPassword = await bcrypt.hash(plainPassword, saltRounds)
-    return newPassword
+let newPassword 
+async function hashPassword(plainPassword) {  
+    return await bcrypt.hash(plainPassword, saltRounds).then(hash=>{console.log(hash); newPassword = hash;return hash;})
+}
+
+async function waitForPassword(plainPassword) {
+    const password = await hashPassword(plainPassword)
+    console.log(password)
+    return JSON.stringify(password)
 }
 
 //==================
 //    USER DATA  
 //==================
-
 const seed_users = [
     {
         email: "homer.simpson@snp.com",
-        password: hashPassword("donut"),
+        password: "donut",
         firstName: "Homer",
         lastName: "Simpson",
         userGroup: 0,
@@ -28,7 +35,7 @@ const seed_users = [
 
     {
         email: "lenny.leonard@snp.com",
-        password: hashPassword("carl"),
+        password: "carl",
         firstName: "Lenny",
         lastName: "Leonard",
         userGroup: 0,
@@ -37,7 +44,7 @@ const seed_users = [
 
     {
         email: "carl.carlson@snp.com",
-        password: hashPassword("lenny"),
+        password: "lenny",
         firstName: "Carl",
         lastName: "Carlson",
         userGroup: 0,
@@ -46,7 +53,7 @@ const seed_users = [
 
     {
         email: "frank.grimes@snp.com",
-        password: hashPassword("grimey"),
+        password: "grimey",
         firstName: "Frank",
         lastName: "Grimes",
         userGroup: 1,
@@ -55,7 +62,7 @@ const seed_users = [
 
     {
         email: "weyland.smithers@snp.com",
-        password: hashPassword("malibustacey"),
+        password: "malibustacey",
         firstName: "Weyland",
         lastName: "Smithers",
         userGroup: 1,
@@ -64,21 +71,24 @@ const seed_users = [
 
     {
         email: "monty.burns@snp.com",
-        password: hashPassword("excellent"),
+        password: "excellent",
         firstName: "Montgomery",
         lastName: "Burns",
         userGroup: 0,
         verified: true
     },
 ]
-
-db.User.deleteMany({}, (err, users) => {
+User.deleteMany({}, async (err, users) => {
     if (err) {
         console.log('Error occured in remove', err)
     } else {
         console.log('Removed all users')
-
-        db.User.insertMany(seed_users, (err, users) => {
+        for (let i = 0; i < seed_users.length; i++) {
+            let something = await hashPassword(seed_users[i].password)
+            console.log(something)
+            seed_users[i].password = something
+        }
+        User.insertMany(seed_users, (err, users) => {
             if (err) {
                 console.log('Error occured in insertMany', err)
             } else {
@@ -88,57 +98,58 @@ db.User.deleteMany({}, (err, users) => {
     }
 })
 
+
 //==================
 //    USER DATA  
 //==================
 
-const seed_issues = [
-    {
-        description: {
-            type: String,
-            required: true
-        },
-        summary: {
-            type: String,
-            required: true
-        },
-        work: [{
-            type: mongoose.ObjectId,
-            ref: 'WorkItem'
-        }],
-        priority: {
-            type: Number
-        },
-        status: {
-            type: Number
-        },
-        postedBy:{
-            type: mongoose.ObjectId,
-            ref: 'User'
-        },
-        assignedTo : {
-            type: mongoose.ObjectId,
-            ref: 'User'
-        },
-        closedBy: {
-            type: mongoose.ObjectId,
-            ref: 'User'
-        }
-    }
-]
+// const seed_issues = [
+//     {
+//         description: {
+//             type: String,
+//             required: true
+//         },
+//         summary: {
+//             type: String,
+//             required: true
+//         },
+//         work: [{
+//             type: mongoose.ObjectId,
+//             ref: 'WorkItem'
+//         }],
+//         priority: {
+//             type: Number
+//         },
+//         status: {
+//             type: Number
+//         },
+//         postedBy:{
+//             type: mongoose.ObjectId,
+//             ref: 'User'
+//         },
+//         assignedTo : {
+//             type: mongoose.ObjectId,
+//             ref: 'User'
+//         },
+//         closedBy: {
+//             type: mongoose.ObjectId,
+//             ref: 'User'
+//         }
+//     }
+// ]
 
-db.Issue.deleteMany({}, (err, issues) => {
-    if (err) {
-        console.log('Error occured in remove', err)
-    } else {
-        console.log('Removed all issues')
+// db.Issue.deleteMany({}, (err, issues) => {
+//     if (err) {
+//         console.log('Error occured in remove', err)
+//     } else {
+//         console.log('Removed all issues')
 
-        db.Issue.insertMany(seed_issues, (err, issues) => {
-            if (err) {
-                console.log('Error occured in insertMany', err)
-            } else {
-                console.log('Created', issues.length, "issues")
-            }
-        })
-    }
-})
+//         db.Issue.insertMany(seed_issues, (err, issues) => {
+//             if (err) {
+//                 console.log('Error occured in insertMany', err)
+//             } else {
+//                 console.log('Created', issues.length, "issues")
+//             }
+//         })
+//     }
+// })
