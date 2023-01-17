@@ -49,53 +49,54 @@ router.post('/request', async (req, res) => {
 //   LOG IN ROUTE / FIND ONE USER
 //==================================
 router.post('/login', (req, res) => {
+    console.log(req.body)
     if (req.body.email && req.body.password) {
         User.findOne({ email: req.body.email }, async (err, user) => {
-            if (err || user == null) {
-                console.log(req.body.email)
-                console.log(req.body.password)
+            if (err || (!user)) {
                 res.sendStatus(404)
-            }
-            const match = await bcrypt.compare(req.body.password, user.password)
-            if (match === true) {
-                const payload = { 
-                    id: user._id,
-                    email: user.email,
-                    userGroup: user.userGroup,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    userId: user._id
-                }
-                const secOptions = {
-                    expiresIn: "60m", 
-                    algorithm: 'HS256'
-                }
-                const refreshSecOptions ={
-                    expiresIn: "48h",
-                    algorithm: 'HS256'
-                }
-                const accessToken = jwt.sign(
-                    payload, 
-                    process.env.JWTSECRET, 
-                    secOptions
-                )
-                const refreshToken = jwt.sign(
-                    {id: user._id},
-                    process.env.REFRESHJWTSECRET,
-                    refreshSecOptions
-                )
-                res.json({
-                    accessToken: accessToken,
-                    refreshToken: refreshToken,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    userGroup: user.userGroup,
-                    email: user.email,
-                    userId: user._id
-                })
             } else {
-                res.sendStatus(401)
+                const match = await bcrypt.compare(req.body.password, user.password)
+                if (match === true) {
+                    const payload = { 
+                        id: user._id,
+                        email: user.email,
+                        userGroup: user.userGroup,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        userId: user._id
+                    }
+                    const secOptions = {
+                        expiresIn: "60m", 
+                        algorithm: 'HS256'
+                    }
+                    const refreshSecOptions ={
+                        expiresIn: "48h",
+                        algorithm: 'HS256'
+                    }
+                    const accessToken = jwt.sign(
+                        payload, 
+                        process.env.JWTSECRET, 
+                        secOptions
+                    )
+                    const refreshToken = jwt.sign(
+                        {id: user._id},
+                        process.env.REFRESHJWTSECRET,
+                        refreshSecOptions
+                    )
+                    res.json({
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        userGroup: user.userGroup,
+                        email: user.email,
+                        userId: user._id
+                    })
+                } else {
+                    res.sendStatus(401)
+                }
             }
+            
         })
     } else {
         res.sendStatus(401)

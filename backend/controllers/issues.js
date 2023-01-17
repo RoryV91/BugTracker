@@ -159,5 +159,15 @@ router.delete('/delete/:id', security.isAuthenticated, async (req, res) => {
         })
 });
 
+//=================
+//   ISSUE INDEX
+//=================
+router.get('/list', security.isAuthenticated, async (req, res) => {
+    Issue.find((err, issues) => {
+        const result = 
+            issues 
+        res.json(result);
+    });
+})
 
 module.exports = router
