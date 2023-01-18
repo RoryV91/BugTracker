@@ -4,26 +4,23 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Nav = () => {
     const navigate = useNavigate();
-    initialState = [
-        <>
-            <h1>MAJOR</h1>
-            <Link to="/">Home</Link>
-            <Link to="/newissue">New Issue</Link>
-            <Link to="/myposts">My Posts</Link>
-            <Link to="/editprofile">Edit Profile</Link>
-            <button onClick={handleLogout}>Logout</button>
-        </>
-    ]
-    const [navItems, setNavItems] = useState(initialState);
-
-
+    const [userData, setUserData] = useState(
+        { 
+        userId: localStorage.getItem('userId'),
+        userGroup: localStorage.getItem('userGroup')
+        }
+    )
     return (
         <div>
-            <header>
                 <ul>
-                    {navItems}
+                    <h1>MAJOR</h1>
+                    <Link to="/">Home</Link>
+                    <Link to="/newissue">New Issue</Link>
+                    <Link to="/myposts">My Posts</Link>
+                    <Link to="/editprofile">Edit Profile</Link>
+                    {userData.userGroup == 2 && <p>fuck you shut up</p>}
+                    <button>Logout</button>
                 </ul>
-            </header>
         </div>
     )
 

@@ -8,34 +8,33 @@ import {useState, useEffect} from 'react';
 
 //COMPONENTS
 //import Nav from './components/Nav';
-import EditIssue from './Pages/editIssue/editIssue';
 import IssueList from './components/issueList/issueList';
-import NewIssue from './Pages/newIssue/newIssue';
-import newUserList from './components/newUserList/newUserList';
 
 //PAGES
-import Admin from './Pages/Admin/admin';
-import BasicUser from './Pages/basicUser/basicUser';
+import Home from './Pages/Home/home';
 import EditProfile from './Pages/editProfile/editProfile';
 import Login from './Pages/Login/login';
 import SignUp from './Pages/Signup/signup';
-import Support from './Pages/Support/support';
 import ViewIssue from './Pages/viewIssue/viewIssue';
+import NewIssue from './Pages/newIssue/newIssue';
+import EditIssue from './Pages/editIssue/editIssue';
+import NewUserList from './Pages/newUserList/newUserList';
+import RequestAccess from './Pages/requestAccess/requestAccess';
 
 function App() {
   return (
     <>
-      <header className="App-header">
-      </header>
       <main>
         <Routes>
-          <Route path="/" element={<BasicUser />}/>
-          <Route path="/admin" element={<Admin />}/>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/editIssue" element={<EditIssue />}/>
           <Route path="/login" element={<Login />}/>
-          <Route path="/support" element={<Support />}/>
+          <Route path="requestAccess" element={<RequestAccess />}/>
           <Route path="/viewIssue" element={<ViewIssue />}/>
+          <Route path="/newIssue" element={<NewIssue />}/>
           <Route path="/signup" element={<SignUp />}/>
           <Route path="/editprofile" element={<EditProfile />}/>
+          <Route path="/newUsers" element={<NewUserList />}/>
         </Routes>
       </main>
     </>

@@ -9,15 +9,8 @@ require('dotenv').config();
 const User = db.User;
 mongoose.set('strictQuery', false)
 
-let newPassword 
 async function hashPassword(plainPassword) {  
     return await bcrypt.hash(plainPassword, saltRounds).then(hash=>{console.log(hash); newPassword = hash;return hash;})
-}
-
-async function waitForPassword(plainPassword) {
-    const password = await hashPassword(plainPassword)
-    console.log(password)
-    return JSON.stringify(password)
 }
 
 //==================
@@ -74,7 +67,7 @@ const seed_users = [
         password: "excellent",
         firstName: "Montgomery",
         lastName: "Burns",
-        userGroup: 0,
+        userGroup: 2,
         verified: true
     },
 ]
@@ -97,59 +90,3 @@ User.deleteMany({}, async (err, users) => {
         })
     }
 })
-
-
-//==================
-//    USER DATA  
-//==================
-
-// const seed_issues = [
-//     {
-//         description: {
-//             type: String,
-//             required: true
-//         },
-//         summary: {
-//             type: String,
-//             required: true
-//         },
-//         work: [{
-//             type: mongoose.ObjectId,
-//             ref: 'WorkItem'
-//         }],
-//         priority: {
-//             type: Number
-//         },
-//         status: {
-//             type: Number
-//         },
-//         postedBy:{
-//             type: mongoose.ObjectId,
-//             ref: 'User'
-//         },
-//         assignedTo : {
-//             type: mongoose.ObjectId,
-//             ref: 'User'
-//         },
-//         closedBy: {
-//             type: mongoose.ObjectId,
-//             ref: 'User'
-//         }
-//     }
-// ]
-
-// db.Issue.deleteMany({}, (err, issues) => {
-//     if (err) {
-//         console.log('Error occured in remove', err)
-//     } else {
-//         console.log('Removed all issues')
-
-//         db.Issue.insertMany(seed_issues, (err, issues) => {
-//             if (err) {
-//                 console.log('Error occured in insertMany', err)
-//             } else {
-//                 console.log('Created', issues.length, "issues")
-//             }
-//         })
-//     }
-// })

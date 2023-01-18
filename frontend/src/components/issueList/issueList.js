@@ -5,6 +5,12 @@ import { getAllIssues } from '../../utils/api'
 
 const IssueList = () => {
 
+    const [userData, setUserData] = useState(
+        { 
+        userId: localStorage.getItem('userId'),
+        userGroup: localStorage.getItem('userGroup')
+        }
+    )
     const [issues, setIssues] = useState([]);
 
     useEffect(() => {
@@ -21,10 +27,37 @@ const IssueList = () => {
         <div>
             {console.log(issues)}
             <h1>Issues</h1>
-            <ul>
+            <table>
+                <tr>
+                    <th>Summary</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Posted By</th>
+                    <th>Assigned To</th>
+                    <th>Closed By</th>
+                    <th>Action</th>
+                </tr>
                 {issues.map(issue => 
-                <li key={issue}>{issue.summary}, {issue.description}</li>)}
-            </ul>
+                <tr key={issue._id}>
+                    <td>{issue.summary},</td> 
+                    <td>{issue.description},</td>
+                    <td>{issue.priority},</td>
+                    <td>{issue.status},</td>
+                    <td>{issue.postedBy}</td>
+                    <td>{issue.assignedTo}</td>
+                    <td>{issue.closedBy}</td>
+                    <td>
+                        <button>View</button>
+                        {userData.userGroup >= 1 && 
+                            <>
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </>
+                        }
+                    </td>
+                </tr>)}
+            </table>
         </div>
     )
 }

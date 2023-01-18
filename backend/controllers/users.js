@@ -10,6 +10,7 @@ const security = require('../utils/security')
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const transport = require('../utils/email');
 
 
 //===================================
@@ -303,6 +304,25 @@ router.get('/list', security.isAdmin, async (req, res) => {
         res.json({users: users});
     });
 })
+
+router.post('/invite', security.isAdmin, async (req, res) => {
+    var mailOptions = {
+    from: req.body.from,
+    to: req.body.to,
+    subject: 'Your access link to Major',
+    text: 'Hi Firstname, \n' + 'This is the unique link to sign up for Major: \n' + req.body.url+ '\n' + 'Please click the link to sign up for your account. Contact your administrator for any firther questions. Have a nice day!'
+  };
+  
+  transport.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+}
+)
 
 
 

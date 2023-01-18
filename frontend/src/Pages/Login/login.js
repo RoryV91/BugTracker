@@ -23,6 +23,7 @@ const Login = () => {
                     localStorage.accessToken = data.accessToken;
                     localStorage.email = data.email;
                     localStorage.userId = data.userId;
+                    localStorage.userGroup = data.userGroup;
                     setLoginForm({
                         email: '',
                         password: ''
