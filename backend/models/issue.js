@@ -41,6 +41,9 @@ const issueSchema = new Schema(
             type: mongoose.ObjectId,
             ref: 'User'
         }
+    },
+    {
+        timestamps: true
     }
 );
 

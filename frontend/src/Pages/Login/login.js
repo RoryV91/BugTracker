@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
+import Nav from '../../components/Nav/nav';
 
 
 const Login = () => {
@@ -38,31 +39,36 @@ const Login = () => {
 
     return (
         <>
-            <h1>Log In page</h1>
-            <p>This is a page</p>
-            <div>
-                <form>
-                    <input 
-                        type="text"
-                        name="email"
-                        onChange={handleChange}
-                        value={loginForm.email}
-                        placeholder="email"
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        onChange={handleChange}
-                        value={loginForm.password}
-                        placeholder="Password"
-                    />
-                    <button 
-                        onClick={(event) => handleSubmit(event, loginForm)}
-                        type="submit"    
-                    >
-                        Login
-                    </button>
-                </form>
+            <header>
+                <Nav />
+            </header>
+            <div className="container">
+                <h3>Log In to your account</h3>
+                <div className="row">
+                    
+                    <form className="column-33 column-offset-25">
+                        <input 
+                            type="text"
+                            name="email"
+                            onChange={handleChange}
+                            value={loginForm.email}
+                            placeholder="email"
+                        />
+                        <input
+                            type="password"
+                            name="password"
+                            onChange={handleChange}
+                            value={loginForm.password}
+                            placeholder="Password"
+                        />
+                        <button 
+                            onClick={(event) => handleSubmit(event, loginForm)}
+                            type="submit"    
+                        >
+                            Login
+                        </button>
+                    </form>
+                </div>
             </div>
         </>
     )

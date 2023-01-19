@@ -20,12 +20,8 @@ const Home = () => {
             <header>
                 <Nav />
             </header>
-            <h1>Home page</h1>
-            <p>This is a page</p>
             <IssueList />
-            {userData.userGroup == 0 && <p>Basic User</p>}
-            {userData.userGroup == 1 && <p>Support User</p>}
-            {userData.userGroup == 2 && <p>Admin User</p>}
+            
         </>
     )
 }

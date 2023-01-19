@@ -5,7 +5,23 @@ axios.defaults.baseURL = 'http://localhost:8000/';
 
 // REQUEST FOR ISSUES BY USER ID
 export async function getUserIssues(userId) {
-    const { data } = await axios.get(`issues/user/${userId}`)
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('accessToken')
+        }
+    }
+    const { data } = await axios.get(`issues/user/${userId}`, config)
+    return data
+}
+
+// REQUEST TO VIEW A SINGLE ISSUE
+export async function getSingleIssue(issueId) {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('accessToken')
+        }
+    }
+    const { data } = await axios.get(`issues/view/${issueId}`, config)
     return data
 }
 
@@ -55,12 +71,12 @@ export async function deleteIssue(issueId) {
 }
 
 // REQUEST TO UPDATE ISSUE
-export async function updateReview(reviewData) {
+export async function updateIssue(issueData) {
     const config = {
         headers: {
-            'Authorization': localStorage.getItem('token')
+            'Authorization': localStorage.getItem('accessToken')
         }
     }
-    const { data } = await axios.put('reviews/update', reviewData, config)
+    const { data } = await axios.put('issues/update', issueData, config)
     return data
 }

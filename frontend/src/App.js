@@ -30,7 +30,7 @@ function App() {
           <Route path="/editIssue" element={<EditIssue />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="requestAccess" element={<RequestAccess />}/>
-          <Route path="/viewIssue" element={<ViewIssue />}/>
+          <Route path="/viewIssue/:issueId" element={<ViewIssue />}/>
           <Route path="/newIssue" element={<NewIssue />}/>
           <Route path="/signup" element={<SignUp />}/>
           <Route path="/editprofile" element={<EditProfile />}/>

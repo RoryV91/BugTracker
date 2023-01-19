@@ -63,7 +63,10 @@ router.get('/view/:id', security.isAuthenticated, (req, res) => {
                 res.json(issue) 
             }
         }
-    )  
+    ).populate({path: 'work', populate: {path: 'supportStaff'}})
+    .populate('postedBy')
+    .populate('assignedTo')
+    .populate('closedBy')
 })
 
 //=================================
@@ -167,7 +170,9 @@ router.get('/list', security.isAuthenticated, async (req, res) => {
         const result = 
             issues 
         res.json(result);
-    });
+    }).populate('postedBy')
+    .populate('assignedTo')
+    .populate('closedBy');
 })
 
 module.exports = router

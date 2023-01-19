@@ -305,6 +305,9 @@ router.get('/list', security.isAdmin, async (req, res) => {
     });
 })
 
+//======================
+//   INVITE UNVERIFIED USER
+//======================
 router.post('/invite', security.isAdmin, async (req, res) => {
     var mailOptions = {
     from: req.body.from,

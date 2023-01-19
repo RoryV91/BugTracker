@@ -18,6 +18,9 @@ const workItemSchema = new Schema(
             type: mongoose.ObjectId,
             ref:'User'
         }
+    },
+    {
+        timestamps: true
     }
 );
 
