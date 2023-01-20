@@ -1,7 +1,6 @@
 import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
-import Nav from '../../components/Nav/nav';
 
 
 const Login = () => {
@@ -39,9 +38,6 @@ const Login = () => {
 
     return (
         <>
-            <header>
-                <Nav />
-            </header>
             <div className="container">
                 <h3>Log In to your account</h3>
                 <div className="row">

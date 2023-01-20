@@ -45,10 +45,7 @@ const handleSubmit = async (event, formData) => {
 
     return (
         <>
-            <header>
-                <Nav />
-            </header>
-            <section class ="container">
+            <section className="container">
                 <h1>Post a new issue</h1>
                 <form>
                     <label>Summary</label>

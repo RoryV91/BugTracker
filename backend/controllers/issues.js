@@ -5,7 +5,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const Issue = db.Issue;
-const jwt = require('jsonwebtoken')
 const security = require('../utils/security')
 
 //==================

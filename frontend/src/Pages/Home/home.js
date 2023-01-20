@@ -17,9 +17,6 @@ const Home = () => {
     
     return (
         <>
-            <header>
-                <Nav />
-            </header>
             <IssueList />
             
         </>

@@ -37,6 +37,28 @@ export async function getUserData(userId) {
     return data
 }
 
+// REQUEST TO GET LIST OF ALL SUPPORT USERS
+export async function getAllSupport() {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('accessToken')
+        }
+    }
+    const { data } = await axios.get('users/supportList', config)
+    return data
+}
+
+// REQUEST TO GET LIST OF ALL USERS
+export async function getAllUsers() {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('accessToken')
+        }
+    }
+    const { data } = await axios.get('users/list', config)
+    return data
+}
+
 // REQUEST TO GET ALL ISSUES
 export async function getAllIssues() {
     const config = {
@@ -71,12 +93,19 @@ export async function deleteIssue(issueId) {
 }
 
 // REQUEST TO UPDATE ISSUE
-export async function updateIssue(issueData) {
+export async function updateIssue(issueData, issueId) {
     const config = {
         headers: {
             'Authorization': localStorage.getItem('accessToken')
         }
+    } 
+    const userType = await localStorage.getItem('userGroup')
+    let route = 'issues/user/update/'
+    if (userType == 1) {
+        route = 'issues/support/update/'
+    } else if (userType == 2) {
+        route = 'issues/admin/update/'
     }
-    const { data } = await axios.put('issues/update', issueData, config)
+    const { data } = await axios.put(`${route}${issueId}`, issueData, config)
     return data
 }

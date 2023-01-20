@@ -46,11 +46,10 @@ router.post('/request', async (req, res) => {
     }
 })
 
-//==================================
-//   LOG IN ROUTE / FIND ONE USER
-//==================================
+//=================
+//   LOG IN ROUTE
+//=================
 router.post('/login', (req, res) => {
-    console.log(req.body)
     if (req.body.email && req.body.password) {
         User.findOne({ email: req.body.email }, async (err, user) => {
             if (err || (!user)) {
@@ -243,9 +242,9 @@ router.delete('/delete/:id', security.isAdmin, (req, res) => {
     })
 });
 
-//=========================
-//   REFRESH TOKEN ROUTE
-//=========================
+//==================================================
+//   REFRESH TOKEN ROUTE / ISSUE NEW ACCESS TOKEN
+//==================================================
 router.post('/refresh_token', async (req, res) => {
     const tokenString = req.body.refreshToken
     const token = tokenString.replace("Bearer ", "");
@@ -301,19 +300,28 @@ router.post('/refresh_token', async (req, res) => {
 //======================
 router.get('/list', security.isAdmin, async (req, res) => {
     User.find((err, users) => {
-        res.json({users: users});
+        res.json(users);
     });
 })
 
 //======================
-//   INVITE UNVERIFIED USER
+//   SUPPORT LIST
 //======================
+router.get('/supportList', security.isAdmin, async (req, res) => {
+    User.find({userGroup: { $gte: 1} }, (err, users) => {
+        res.json(users);
+    });
+})
+
+//============================
+//   INVITE UNVERIFIED USER
+//============================
 router.post('/invite', security.isAdmin, async (req, res) => {
     var mailOptions = {
     from: req.body.from,
     to: req.body.to,
     subject: 'Your access link to Major',
-    text: 'Hi Firstname, \n' + 'This is the unique link to sign up for Major: \n' + req.body.url+ '\n' + 'Please click the link to sign up for your account. Contact your administrator for any firther questions. Have a nice day!'
+    text: `Hi Firstname, \n` + `This is the unique link to sign up for Major: \n` + req.body.url+ '\n' + `Please click the link to sign up for your account. Contact your administrator for any firther questions. Have a nice day!`
   };
   
   transport.sendMail(mailOptions, function(error, info){

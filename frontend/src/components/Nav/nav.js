@@ -10,6 +10,11 @@ const Nav = () => {
         userGroup: localStorage.getItem('userGroup')
         }
     )
+
+    const handleLogOut = () => {
+        localStorage.clear();
+        navigate("/login", {replace: true});
+    }
     return (
                 <ul className="row">
                     <h1 className="column">MAJOR</h1>
@@ -29,7 +34,7 @@ const Nav = () => {
                             New Issue
                         </button>
                     </Link>
-                    <Link to="/myposts" className="column">
+                    <Link to="/myPosts" className="column">
                         <button className="button button-outline">
                             My Posts
                         </button>
@@ -40,15 +45,17 @@ const Nav = () => {
                         </button>
                     </Link>
                     {userData.userGroup == 2 && 
-                        <Link to="/newUsers" className="column">
+                        <Link to="/userList" className="column">
                             <button className="button button-outline">
-                                New Users
+                                User List
                             </button>
                         </Link>
                     }
-                    <button className="column button button-outline">
+                    <div className="column">
+                    <button className="button button-outline" onClick={handleLogOut}>
                         Logout
                     </button>
+                    </div>
                 </ul>
     )
 
