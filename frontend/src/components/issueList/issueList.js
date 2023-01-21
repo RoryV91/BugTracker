@@ -56,7 +56,7 @@ const IssueList = () => {
                         <td>{issue.closedBy ? (issue.closedBy.firstName + ' ' + issue.closedBy.lastName): "N/A"}</td>
                         <td>
                             <Link to={`/viewIssue/${issue._id}`}><button>View</button></Link>
-                            {(userData.userGroup >= 1) & (issue.status != 4) && 
+                            {(userData.userGroup >= 1) && (issue.status != 4) && 
                                 <>
                                     <Link 
                                         className="column column-25 column-offset-10" 

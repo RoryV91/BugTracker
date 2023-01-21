@@ -32,17 +32,17 @@ router.post('/request', async (req, res) => {
                             if (user) {
                                 res.sendStatus(200)
                             } else {
-                                res.sendStatus(401)
+                                res.sendStatus(500)
                             }
                         })
                     // Send an error if the user already exists
                 } else {
-                    res.sendStatus(401)
+                    res.sendStatus(500)
                 }
             })
         // Send an error if the request body does not have an email
     } else {
-        res.sendStatus(401)
+        res.sendStatus(500)
     }
 })
 
@@ -304,6 +304,22 @@ router.get('/list', security.isAdmin, async (req, res) => {
     });
 })
 
+//=======================
+//    VIEW SINGLE USER
+//=======================
+router.get('/view/:id', security.isAuthenticated, (req, res) => {
+    db.User.findById(
+        req.params.id ,
+        (err, issue) => {
+            if (err) {
+                res.sendStatus(500)
+            } else {
+                res.json(issue) 
+            }
+        }
+    )
+})
+
 //======================
 //   SUPPORT LIST
 //======================
@@ -318,17 +334,17 @@ router.get('/supportList', security.isAdmin, async (req, res) => {
 //============================
 router.post('/invite', security.isAdmin, async (req, res) => {
     var mailOptions = {
-    from: req.body.from,
-    to: req.body.to,
+    from: '',
+    to: req.body.email,
     subject: 'Your access link to Major',
-    text: `Hi Firstname, \n` + `This is the unique link to sign up for Major: \n` + req.body.url+ '\n' + `Please click the link to sign up for your account. Contact your administrator for any firther questions. Have a nice day!`
+    text: `Hello! \n` + `This is your unique link to sign up for Major: \n` + '\n' + `Please click the link to sign up for your account. Contact your administrator for any firther questions. Have a nice day! \n` + req.body.base_url + `\n` + `Thanks! \n Major Admin Team`
   };
-  
   transport.sendMail(mailOptions, function(error, info){
     if (error) {
       console.log(error);
     } else {
       console.log('Email sent: ' + info.response);
+      res(info.response);
     }
   });
 

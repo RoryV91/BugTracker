@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes, Route, useParams, useNavigate, Outlet} from 'react-router-dom';
+import {Routes, Route, useParams, Navigate, Outlet, RedirectFunction} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 
 //======================================
@@ -20,35 +20,58 @@ import EditIssue from './Pages/editIssue/editIssue';
 import UserList from './Pages/userList/userList';
 import RequestAccess from './Pages/requestAccess/requestAccess';
 import UserIssues from './Pages/userIssues/userIssues';
+import EditUser from './Pages/editUser/editUser';
 
 
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const requireAuth = () => {
-    return (isLoggedIn == true ? <Outlet /> : <Navigate to="/login" replace />)
+  const [user, setUser] = useState(null)
+  
+  const ProtectedRoute = ({ user, redirectPath = '/login', children }) => {
+    if (!user) {
+      return <Navigate to={redirectPath} replace />;
+    }
+    return children ? children : <Outlet />;
+  };
+
+  const checkCreds = () => {
+    if (localStorage.getItem('accessToken')) {
+      let user = {
+        accessToken: localStorage.getItem('accessToken'),
+        refreshToken: localStorage.getItem('refreshToken'),
+        email: localStorage.getItem('email'),
+        _id: localStorage.getItem('userId'),
+        userGroup: localStorage.getItem('userGroup')
+      }
+      console.log(user);
+      setUser(user);
+    }
   }
 
   return (
     <>
+    {!user && checkCreds()}
     <header>
-      <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Nav user={user} setUser={setUser} />
     </header>
       <main>
         <Routes>
-            <Route path="/" 
-          element={<Home/>}/>
           
-          <Route path="/editIssue/:issueId" element={<EditIssue />}/>
-          <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
-          <Route path="requestAccess" element={<RequestAccess />}/>
-          <Route path="/viewIssue/:issueId" element={<ViewIssue />}/>
-          <Route path="/newIssue" element={<NewIssue />}/>
-          <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
-          <Route path="/editprofile" element={<EditProfile />}/>
-          <Route path="/userList" element={<UserList />}/>
-          <Route path="/myPosts" element={<UserIssues />}/>
+          <Route path="/login" element={<Login user={user} setUser={setUser} />}/>
+          <Route path="/requestAccess" element={<RequestAccess />}/>
+          <Route path="/users/signup/:id" element={<SignUp user={user} setUser={setUser} />}/>
+          <Route element={<ProtectedRoute user={user} />}>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/editIssue/:issueId" element={<EditIssue user={user} />}/>
+            <Route path="/viewIssue/:issueId" element={<ViewIssue user={user} />}/>
+            <Route path="/newIssue" element={<NewIssue user={user} />}/>
+            <Route path="/editprofile" element={<EditProfile user={user} />}/>
+            <Route path="/userList" element={<UserList user={user} />}/>
+            <Route path="/myPosts" element={<UserIssues user={user} />}/> 
+            <Route path="/editUser/:user_id" element={<EditUser user={user} />}/>
+          </Route>
+          <Route path="*" element={<Navigate replace to="/" />}/>
         </Routes>
       </main>
     </>

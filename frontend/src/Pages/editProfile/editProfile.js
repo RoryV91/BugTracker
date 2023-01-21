@@ -1,9 +1,20 @@
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getSingleUser } from '../../utils/api';
+import { userGroupNames } from '../../utils/info'
+
+
 const EditProfile = () => {
+
 
     return (
         <>
-            <h1>Edit PROFILE page</h1>
-            <p>This is a page</p>
+            <section className="container">
+                <h1>Edit Profile</h1>
+                <form>
+
+                </form>
+            </section>
         </>
     )
 }

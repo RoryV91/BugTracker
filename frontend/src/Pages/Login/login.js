@@ -1,9 +1,10 @@
 import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
-const Login = () => {
+
+const Login = (props) => {
 
     const navigate = useNavigate(); 
     const [loginForm, setLoginForm] = useState({
@@ -21,6 +22,7 @@ const Login = () => {
             .then((data) => {
                 if (data.accessToken) {
                     localStorage.accessToken = data.accessToken;
+                    localStorage.refreshToken = data.refreshToken;
                     localStorage.email = data.email;
                     localStorage.userId = data.userId;
                     localStorage.userGroup = data.userGroup;
@@ -28,6 +30,7 @@ const Login = () => {
                         email: '',
                         password: ''
                     })
+                    props.setUser(data);
                     navigate("/", {replace: true})
                 } else {
                         window.alert("Login error! Email/password do not match!");
@@ -57,12 +60,20 @@ const Login = () => {
                             value={loginForm.password}
                             placeholder="Password"
                         />
-                        <button 
+                        <button
+                            className="column" 
                             onClick={(event) => handleSubmit(event, loginForm)}
                             type="submit"    
                         >
                             Login
                         </button>
+                        <p>Dont have a login? Request access from your administrator:</p>
+                        <Link 
+                            to="/requestAccess"
+                            className="column column-offset-25"
+                        >
+                            <button>Request Access</button>
+                            </Link>
                     </form>
                 </div>
             </div>

@@ -90,7 +90,7 @@ const ViewIssue = () => {
                 </tbody>
             </table>
             <div className="row"> 
-                {}
+                {issueData.status != 4 &&
                 <Link 
                     className="column column-25 column-offset-10" 
                     to={`/editIssue/${issueId}`}
@@ -108,7 +108,7 @@ const ViewIssue = () => {
                     <button className="button button-small">
                     Edit
                     </button>
-                </Link>
+                </Link>}
                 <div className="column column-25 column-offset-10">
                     <button 
                         className=" button"

@@ -5,11 +5,12 @@ import { statusDescriptions, priorityLevels } from '../../utils/info'
 
     
 
-const EditIssue = () => {
+const EditIssue = (props) => {
     let {issueId} = useParams()
     const location = useLocation()
     const { state } = location;
-    const navigate = useNavigate();     
+    const navigate = useNavigate();
+    const [newWorkItem, setNewWorkItem] = useState('')     
     const [issueData, setIssueData] = useState({
         summary: '',
         description: '',
@@ -20,19 +21,12 @@ const EditIssue = () => {
         assignedTo: null,
         closedBy: null
     });
-    
-    const [userData, setUserData] = useState(
-        { 
-        userId: localStorage.getItem('userId'),
-        userGroup: localStorage.getItem('userGroup')
-        }
-    )
         
     const [supportUsers, setSupportUsers] = useState([])
 
 
     useEffect(() => {
-        if (userData.userGroup >= 1) {
+        if (props.user.userGroup >= 1) {
             let  mounted = true;
             getSingleIssue(issueId).then((res) => {
                 if(mounted) {
@@ -60,6 +54,12 @@ const EditIssue = () => {
     const handleChange = (event) => {
         setIssueData({...issueData, [event.target.name]: event.target.value })
     }
+
+    const handleWorkItemChange = (event) => {
+        setNewWorkItem(event.target.value)
+    }
+
+    //const handleWorkItemSubmit = async (event, work)
         
     const handleSubmit = async (event, issueData) => {
         event.preventDefault();
@@ -71,12 +71,6 @@ const EditIssue = () => {
         await deleteIssue(issueId);
         navigate("/", {replace: true})
     }
-    
-    const closeIssue = async (event) => {
-        event.preventDefault();
-        await setIssueData({...issueData, [event.target.name]: event.target.value })
-        await updateIssue(issueData.status, issueData.closedBy).then((res) => {navigate('/', {replace: true})})
-    }
 
         return (
             <>
@@ -84,21 +78,25 @@ const EditIssue = () => {
                     <h1>Edit Issue</h1>
                     <form>
                         <label>Summary</label>
+                        {(props.user._id != issueData.postedBy) && (props.user.userGroup < 1 ) ?
+                        <p>{issueData.summary}</p>:
                         <input 
                             type="text"
                             name="summary"
                             onChange={handleChange}
                             value={issueData.summary}
                             placeholder="Summary"
-                        />
+                        />}
                         <label>Description</label>
+                        {(props.user._id != issueData.postedBy) && (props.user.userGroup < 1 ) ?
+                        <p>{issueData.description}</p>:
                         <input
                             type="text"
                             name="description"
                             onChange={handleChange}
                             value={issueData.description}
                             placeholder="Description"
-                        />
+                        />}
                         <div className="row">
                             
                             
@@ -106,7 +104,7 @@ const EditIssue = () => {
                         </div>
                         <div className="row">
                             <label className="column">Priority </label>
-                            {userData.userGroup >= 1 ? 
+                            {props.user.userGroup >= 1 ? 
                                 <select className="column" name="priority" onChange={handleChange} value={issueData.priority}>
                                     <option value={0}>Low</option>
                                     <option value={1}>Intermediate</option>
@@ -114,13 +112,12 @@ const EditIssue = () => {
                                 </select>
                             : <p className='column'>{priorityLevels[issueData.priority]}</p>}
                             <label className="column column-offset-25">Status </label>
-                            {userData.userGroup >= 1 ? 
+                            {props.user.userGroup >= 1 ? 
                                 <select className="column" name="status" onChange={handleChange} value={issueData.status}>
                                     <option value={0}>Submitted</option>
                                     <option value={1}>Assigned</option>
-                                    <option value={3}>In Progress</option>
-                                    <option value={4}>In Review</option>
-                                    {/* <option value={5}>Closed</option> */}
+                                    <option value={2}>In Progress</option>
+                                    <option value={3}>In Review</option>
                                 </select>
                             : <p className='column'>{statusDescriptions[issueData.status]}</p>}
                         </div>
@@ -128,7 +125,7 @@ const EditIssue = () => {
                             <label className="column">Posted By: </label>
                             <p className="column">{issueData.postedBy ? (issueData.postedBy.firstName + ' ' + issueData.postedBy.lastName): "N/A"}</p>
                             <label className="column">Assigned To: </label>
-                                {userData.userGroup >= 1 ? 
+                                {props.user.userGroup >= 1 ? 
                                     <select 
                                         className="column" 
                                         name="assignedTo" 
@@ -151,33 +148,53 @@ const EditIssue = () => {
                                 }
                             
                             <label className="column">Closed By:</label>
-                            <input type="hidden" onChange={handleChange}></input>
                             <p className="column">{issueData.closedBy ? (issueData.closedBy.firstName + ' ' + issueData.closedBy.lastName): "N/A"}</p>
                         </div>
+                        <div className="row">
+                            <label className='column'>Work Items</label>
+                            <input type="text" className='column'></input>
+                                <button 
+                                    className='column-10 column-offset-10'
+                                >
+                                    Add Work Item
+                                </button>
+                            {issueData.work.map(workItem =>
+                                <div className="row">
+                                <label>work</label>
+                                <p>{workItem.task}</p>
+                                </div>   
+                            )}
+                        </div>
                         <div className='row'>
+                        {(props.user._id == issueData.postedBy) || (props.user.userGroup >= 1 )  && 
                             <button 
                                 className="column"
                                 onClick={(event) => handleSubmit(event, issueData)}
                                 type="submit"    
                             >
                                 Submit
-                            </button>
-                            {userData.userGroup >= 1 && 
+                            </button>}
+                            {(props.user._id == issueData.postedBy) || (props.user.userGroup >= 1 )  && 
                             <button
                                 className="column column-offset-10" 
                                 onClick={(event) => handleDelete(event, issueId)}   
                             >
                                 Delete
                             </button>}
-                            
+                            {(props.user._id == issueData.postedBy) || (props.user.userGroup >= 1 )  && 
                             <button
                                 className="column column-offset-10"
                                 name="closedBy"
-                                value={userData.userId}
-                                onClick={closeIssue(issueData)}
+                                value={props.user._id}
+                                onClick={(event) => {
+                                    issueData.status = 4;
+                                    issueData.closedBy = props.user._id;
+                                    handleSubmit(event, issueData)
+                                }}
                             >
                                 Close Issue
-                            </button>
+                            </button>}
+                            
                             <button 
                                 className="column column-offset-10"
                                 onClick={() => navigate(`/viewIssue/${issueId}`)}
