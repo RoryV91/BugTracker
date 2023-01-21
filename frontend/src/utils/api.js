@@ -66,6 +66,14 @@ axios.defaults.baseURL = 'http://localhost:8000/';
         const { data } = await axios.get('users/list', config)
         return data
     }
+    
+    //============================
+    //   REQUEST TO CREATE USER
+    //============================
+    export async function createUser(email) {
+        const { data } = await axios.post('users/request', email)
+        return data
+    }
 
     //============================
     //   REQUEST TO UPDATE USER

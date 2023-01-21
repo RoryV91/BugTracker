@@ -55,11 +55,19 @@ const UserList = () => {
                                         >
                                             Invite
                                         </button> : 
-                                        <Link to={`/editUser/${user._id}`} className="column">    
+                                        <Link 
+                                            to={`/editUser/${user._id}`} 
+                                            className="column"
+                                            state={
+                                                user.email
+                                            }
+                                            >    
                                             <button>Edit</button> 
                                         </Link>
                                     }
-                                    <button>Delete</button>
+                                    <button>
+                                        Delete
+                                    </button>
                                 </>
                             </td>
                         </tr>

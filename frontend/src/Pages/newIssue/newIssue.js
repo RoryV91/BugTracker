@@ -1,47 +1,45 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import { createIssue } from '../../utils/api';
-import Nav from '../../components/Nav/nav';
 
 const NewIssue = () => {
 
-const navigate = useNavigate();     
-const [formItems, setFormItems] = useState();
-const [formData, setFormData] = useState({
-    summary: '',
-    description: '',
-    priority: 0,
-    status: 0,
-    postedBy: localStorage.getItem('userId'),
-    assignedTo: null,
-    closedBy: null
-});
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        summary: '',
+        description: '',
+        priority: 0,
+        status: 0,
+        postedBy: localStorage.getItem('userId'),
+        assignedTo: null,
+        closedBy: null
+    });
 
-const handleChange = (event) => {
-    setFormData({...formData, [event.target.name]: event.target.value })
-}
-    
-const handleSubmit = async (event, formData) => {
-    event.preventDefault()
-    console.log(formData)
-    createIssue(formData)
-        .then((data) => {
-            if (data.message) {
-                setFormData({
-                    summary: '',
-                    description: '',
-                    priority: 0,
-                    status: 0,
-                    postedBy: localStorage.getItem('userId'),
-                    assignedTo: null,
-                    closedBy: null
-                })
-                navigate("/", {replace: true})
-            } else {
-                    window.alert("Error posting Issue!");
-            }
-        })
+    const handleChange = (event) => {
+        setFormData({...formData, [event.target.name]: event.target.value })
     }
+        
+    const handleSubmit = async (event, formData) => {
+        event.preventDefault()
+        console.log(formData)
+        createIssue(formData)
+            .then((data) => {
+                if (data.message) {
+                    setFormData({
+                        summary: '',
+                        description: '',
+                        priority: 0,
+                        status: 0,
+                        postedBy: localStorage.getItem('userId'),
+                        assignedTo: null,
+                        closedBy: null
+                    })
+                    navigate("/", {replace: true})
+                } else {
+                        window.alert("Error posting Issue!");
+                }
+            })
+        }
 
     return (
         <>

@@ -44,8 +44,7 @@ const Login = (props) => {
             <div className="container">
                 <h3>Log In to your account</h3>
                 <div className="row">
-                    
-                    <form className="column-33 column-offset-25">
+                    <form className="column-33">
                         <input 
                             type="text"
                             name="email"
@@ -67,7 +66,7 @@ const Login = (props) => {
                         >
                             Login
                         </button>
-                        <p>Dont have a login? Request access from your administrator:</p>
+                        <h4>Dont have a login? Request access from your administrator. 🧑‍💻</h4>
                         <Link 
                             to="/requestAccess"
                             className="column column-offset-25"
