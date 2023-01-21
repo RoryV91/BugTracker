@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import { getAllUsers, sendEmail } from '../../utils/api'
+import { deleteUser, getAllUsers, sendEmail } from '../../utils/api'
 import { Link, useNavigate } from "react-router-dom";
 import { userGroupNames } from '../../utils/info'
 
@@ -22,12 +22,19 @@ const UserList = () => {
         .then(
             (res) => {console.log(res); alert(res)}
         )
-            .then((res) => {navigate(`/viewIssue/${issueId}`, {replace: true})})
+            .then((res) => {navigate(`/userList`, {replace: true})})
+    }
+
+    const handleDelete = async (event) => {
+        event.preventDefault();
+        await deleteUser(userId);
+        navigate("/userList", {replace: true})
     }
 
     return (
         <>
             <div className="container">
+                <h1>USER LIST</h1>
                 <table>
                     <thead>
                         <tr>
@@ -58,9 +65,14 @@ const UserList = () => {
                                         <Link 
                                             to={`/editUser/${user._id}`} 
                                             className="column"
-                                            state={
-                                                user.email
-                                            }
+                                            state={{
+                                                email: user.email,
+                                                _id: user._id,
+                                                verified: user.verified,
+                                                firstName: user.firstName,
+                                                lastName: user.lastName,
+                                                userGroup: user.userGroup
+                                            }}
                                             >    
                                             <button>Edit</button> 
                                         </Link>

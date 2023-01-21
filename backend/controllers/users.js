@@ -310,11 +310,11 @@ router.get('/list', security.isAdmin, async (req, res) => {
 router.get('/view/:id', security.isAuthenticated, (req, res) => {
     db.User.findById(
         req.params.id ,
-        (err, issue) => {
+        (err, user) => {
             if (err) {
                 res.sendStatus(500)
             } else {
-                res.json(issue) 
+                res.json(user) 
             }
         }
     )

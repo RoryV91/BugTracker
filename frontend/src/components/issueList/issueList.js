@@ -31,6 +31,8 @@ const IssueList = () => {
 
     return (
         <div className="container">
+            <h1>HOME</h1>
+            <h2>Issue List</h2>
             <table>
                 <thead>
                     <tr>
@@ -55,7 +57,9 @@ const IssueList = () => {
                         <td>{issue.assignedTo ? (issue.assignedTo.firstName + ' ' + issue.assignedTo.lastName): "N/A"}</td>
                         <td>{issue.closedBy ? (issue.closedBy.firstName + ' ' + issue.closedBy.lastName): "N/A"}</td>
                         <td>
-                            <Link to={`/viewIssue/${issue._id}`}><button>View</button></Link>
+                            <Link to={`/viewIssue/${issue._id}`}>
+                                <button>View</button>
+                            </Link>
                             {(userData.userGroup >= 1) && (issue.status != 4) && 
                                 <>
                                     <Link 
@@ -74,12 +78,18 @@ const IssueList = () => {
                                     >
                                         <button>Edit</button>
                                     </Link>
-                                    <button id={issue._id} onClick={handleDelete}>Delete</button>
+                                    <button 
+                                        id={issue._id} 
+                                        onClick={handleDelete}
+                                    >
+                                        Delete
+                                    </button>
                                 </>
                             }
                         </td>
                     </tr>
-                </tbody>)}
+                </tbody>
+                )}
             </table>
         </div>
     )
