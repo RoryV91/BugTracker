@@ -20,7 +20,7 @@ const issueSchema = new Schema(
             required: true
         },
         work: [{
-            type: mongoose.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'WorkItem'
         }],
         priority: {
@@ -30,15 +30,15 @@ const issueSchema = new Schema(
             type: Number
         },
         postedBy:{
-            type: mongoose.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User'
         },
         assignedTo : {
-            type: mongoose.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User'
         },
         closedBy: {
-            type: mongoose.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User'
         }
     },

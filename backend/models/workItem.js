@@ -15,7 +15,7 @@ const workItemSchema = new Schema(
             required: true,
         },
         supportStaff: {
-            type: mongoose.ObjectId,
+            type: Schema.Types.ObjectId,
             ref:'User'
         }
     },
