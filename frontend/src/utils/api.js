@@ -213,7 +213,70 @@ axios.defaults.baseURL = 'http://localhost:8000/';
 //   WORKITEMS DB API REQUESTS
 //===============================
 
+    //================================
+    //   REQUEST TO CREATE WORKITEM
+    //================================
+    export async function createWorkItem(workItemData) {
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }
+        }
+        const { data } = await axios.post('workItems/create', workItemData, config)
+        return data
+    }
 
-
-
-
+    //======================================
+    //   REQUEST TO ADD WORKITEM TO ISSUE
+    //======================================
+    export async function addWorkItem(workItemId, issueId) {
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }
+        }
+        const { data } = await axios.put(`issues/support/add/${issueId}`, workItemId, config)
+        return data
+    }
+    
+    //================================
+    //   REQUEST TO UPDATE WORKITEM
+    //================================
+    export async function updateWorkItem(workItemData, workItemId) {
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }
+        } 
+        const { data } = await axios.put(`workItems/update/${workItemId}`, workItemData, config)
+        return data
+    }
+    
+    //================================
+    //   REQUEST TO DELETE WORKITEM
+    //================================
+    export async function deleteWorkItem(workItemId) {
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }
+        }
+        const { data } = await axios.delete(`workItems/delete/${workItemId}`, config)
+        return data
+    }
+    
+    //===========================================
+    //   REQUEST TO REMOVE WORKITEM FROM ISSUE
+    //===========================================
+    export async function removeWorkItem(workItemId, issueId) {
+        const workItemInfo = {
+            workItemId: workItemId
+        }
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }
+        }
+       const { data } = await axios.put(`issues/support/remove/${issueId}`, workItemInfo, config)
+       return data
+    }

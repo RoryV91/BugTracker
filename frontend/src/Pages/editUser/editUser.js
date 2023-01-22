@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { updateUser, getSingleUser, deleteUser } from '../../utils/api';
 import { userGroupNames } from '../../utils/info'
 
@@ -7,8 +7,6 @@ import { userGroupNames } from '../../utils/info'
 const EditUser = (props) => {
 
     let {userId} = useParams()
-    const location = useLocation()
-    const { state } = location;
     const navigate = useNavigate(); 
     const [userData, setUserData] = useState({
         email: '',
@@ -56,15 +54,28 @@ const EditUser = (props) => {
                     <label>First Name</label>
                     <input
                         name="firstName"
-                        value={props.user.firstName}
+                        value={userData.firstName}
                     />
                     <label>Last Name</label>
-                    <input/>
+                    <input
+                        name="lastName"
+                        value={userData.lastName}
+                    />
                     <label>E-Mail Address</label>
-                    <input/>
+                    <input
+                        name="email"
+                        value={userData.email}
+                    />
+                    <label>Password</label>
+                    <input />
                     <label>User Group</label>
-                    <select>
-                        <option></option>
+                    <select
+                        name="userGroup"
+                        value={userData.userGroup}
+                    >
+                        <option value={0}>User</option>
+                        <option value={1}>Support</option>
+                        <option value={2}>Admin</option>
                     </select>
                     <div className="row">
                     <button className="column">

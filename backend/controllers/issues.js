@@ -128,11 +128,12 @@ router.put('/support/remove/:id', security.isSupport, async (req, res) => {
     const updatedIssue = await db.Issue.findByIdAndUpdate(
     req.params.id,
     { $pull: {
-        work:{ _id: req.body.workItemId } 
+         work: req.body.workItemId 
     }
+    
     },
     { new: true }
-    ).populate(); 
+    );
     res.json(updatedIssue)
 });
 

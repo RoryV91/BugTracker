@@ -19,7 +19,7 @@ router.post('/create', security.isSupport, async (req, res) => {
     WorkItem.create(newWorkItem)
         .then(result => {
             console.log(result)
-            res.json(newWorkItem)
+            res.json(result)
         })
 });
 

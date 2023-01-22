@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { getSingleIssue, deleteIssue } from '../../utils/api'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { statusDescriptions, priorityLevels } from '../../utils/info'
-import Nav from '../../components/Nav/nav'
 
 
 const ViewIssue = () => {
@@ -106,7 +105,7 @@ const ViewIssue = () => {
                     }}
                 >
                     <button className="button button-small">
-                    Edit
+                        Edit
                     </button>
                 </Link>}
                 <div className="column column-25 column-offset-10">
@@ -120,29 +119,31 @@ const ViewIssue = () => {
             </div>
             
             <h4>Support Details</h4>
-            <table>
-                <caption>Work Item number</caption>
-                <thead>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Support Staff</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>Implemented on</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>Updated on</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>Task Performed</th>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+            {issueData.work.map((workItem, i) =>
+                <table key={workItem._id}>
+                    <caption>
+                        Work Item {(i++)+1}
+                    </caption>
+                    <thead>
+                    </thead>
+                    
+                        <tbody>
+                            <tr className='row'>
+                                <th className='column'>Task:</th>
+                                <td className="column">{workItem.task}</td>
+                            </tr>
+                            <tr className='row'>
+                                <th className='column'>Support Staff:</th>
+                                <td className="column">{workItem.supportStaff.firstName} {workItem.supportStaff.lastName}</td>
+                            </tr>
+                            <tr className='row'>
+                                <th className='column'>Performed on:</th>
+                                <td className="column">{workItem.createdAt}</td>
+                            </tr>
+                        </tbody>
+                    
+                </table>
+            )}
         </div></>
     )
 }

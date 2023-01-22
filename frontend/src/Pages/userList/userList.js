@@ -46,32 +46,32 @@ const UserList = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {users.map(user =>
-                    <tbody key={user._id}>
+                    {users.map(userInfo =>
+                    <tbody key={userInfo._id}>
                         <tr>
-                            <td>{user.email}</td>
-                            <td>{JSON.stringify(user.verified)}</td>
-                            <td>{user.firstName}</td>
-                            <td>{user.lastName}</td>
-                            <td>{userGroupNames[user.userGroup]}</td>
+                            <td>{userInfo.email}</td>
+                            <td>{JSON.stringify(userInfo.verified)}</td>
+                            <td>{userInfo.firstName}</td>
+                            <td>{userInfo.lastName}</td>
+                            <td>{userGroupNames[userInfo.userGroup]}</td>
                             <td>
                                 <>
-                                    {user.verified == false ? 
+                                    {userInfo.verified == false ? 
                                         <button
-                                           onClick={() => inviteUser(user._id, user.email)}
+                                           onClick={() => inviteUser(userInfo._id, userInfo.email)}
                                         >
                                             Invite
                                         </button> : 
                                         <Link 
-                                            to={`/editUser/${user._id}`} 
+                                            to={`/editUser/${userInfo._id}`} 
                                             className="column"
                                             state={{
-                                                email: user.email,
-                                                _id: user._id,
-                                                verified: user.verified,
-                                                firstName: user.firstName,
-                                                lastName: user.lastName,
-                                                userGroup: user.userGroup
+                                                email: userInfo.email,
+                                                _id: userInfo._id,
+                                                verified: userInfo.verified,
+                                                firstName: userInfo.firstName,
+                                                lastName: userInfo.lastName,
+                                                userGroup: userInfo.userGroup
                                             }}
                                             >    
                                             <button>Edit</button> 

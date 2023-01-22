@@ -44,7 +44,6 @@ function App() {
         _id: localStorage.getItem('userId'),
         userGroup: localStorage.getItem('userGroup')
       }
-      console.log(user);
       setUser(user);
     }
   }
@@ -69,7 +68,7 @@ function App() {
             <Route path="/editprofile" element={<EditProfile user={user} />}/>
             <Route path="/userList" element={<UserList user={user} />}/>
             <Route path="/myPosts" element={<UserIssues user={user} />}/> 
-            <Route path="/editUser/:user_id" element={<EditUser user={user} />}/>
+            <Route path="/editUser/:userId" element={<EditUser user={user} />}/>
           </Route>
           <Route path="*" element={<Navigate replace to="/" />}/>
         </Routes>

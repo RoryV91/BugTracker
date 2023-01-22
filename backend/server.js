@@ -19,7 +19,7 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride('_method'));
-app.use(express.static(path.join(path.dirname(__dirname), "major", "build")))
+app.use(express.static(path.join(path.dirname(__dirname), "frontend", "build")))
 
 //Controllers
 app.use('/users', userCtrl);
@@ -28,7 +28,7 @@ app.use('/workItems', workItemCtrl);
 
 // any other route not matching the routes above gets routed by React
 app.get("*", (req, res) => {
-    res.sendFile(path.join(path.dirname(__dirname), "major", "build", "index.html"));
+    res.sendFile(path.join(path.dirname(__dirname), "frontend", "build", "index.html"));
 });
 
 
