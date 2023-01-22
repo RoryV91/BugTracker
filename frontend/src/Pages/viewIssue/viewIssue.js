@@ -42,7 +42,6 @@ const ViewIssue = () => {
 
     return (
         <>
-        {console.log(issueData)}
             <div className="container">
             <h4>Issue Detail</h4>
             
@@ -121,7 +120,7 @@ const ViewIssue = () => {
             </div>
             
             <h4>Support Details</h4>
-            {issueData.work.map((workItem, i) =>
+            {issueData.work.length > 0 && issueData.work.map((workItem, i) =>
                 <table key={workItem._id}>
                     <caption>
                         Work Item {(i++)+1}

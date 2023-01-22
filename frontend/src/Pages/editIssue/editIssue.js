@@ -188,7 +188,7 @@ const EditIssue = (props) => {
                         </div>
                         
                             <label className='column'>Work Performed</label>
-                                {issueData.work.map((workItem, i) =>
+                                {issueData.work.length > 0 && issueData.work.map((workItem, i) =>
                                     <div key={workItem._id}>
                                         <table>
                                             <caption>
