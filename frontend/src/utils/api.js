@@ -4,7 +4,7 @@ import axios from 'axios';
 //===============================
 //   FOR TESTING PURPOSES ONLY
 //===============================
-axios.defaults.baseURL = 'http://localhost:8000/';
+//axios.defaults.baseURL = 'http://localhost:8000/';
 
 //===========================
 //   USERS DB API REQUESTS
@@ -127,7 +127,7 @@ axios.defaults.baseURL = 'http://localhost:8000/';
         }
         const emailData= {
             email: email,
-            base_url: `http://localhost:3000/users/signup/${id}`
+            base_url: `https://major-bugtracker.herokuapp.com/users/signup/${id}`
         }
         console.log(emailData)
         const { data } = await axios.post(`users/invite`, emailData, config)
