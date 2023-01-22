@@ -29,7 +29,7 @@ function App() {
   const [user, setUser] = useState(null)
   
   const ProtectedRoute = ({ user, redirectPath = '/login', children }) => {
-    if (!user) {
+    if (!user || user.accessToken == null) {
       return <Navigate to={redirectPath} replace />;
     }
     return children ? children : <Outlet />;
