@@ -14,6 +14,7 @@ import {
 import { statusDescriptions, priorityLevels } from '../../utils/info'
 
 const EditIssue = (props) => {
+    const userId = localStorage.getItem('userId');
     let {issueId} = useParams()
     const location = useLocation()
     const { state } = location;
@@ -39,6 +40,7 @@ const EditIssue = (props) => {
             getSingleIssue(issueId).then((res) => {
                 if(mounted) {
                     setIssueData(res)
+                    console.log(res)
                 }
             })
             .then(
@@ -54,6 +56,7 @@ const EditIssue = (props) => {
             getSingleIssue(issueId).then((res) => {
                 if(mounted) {
                     setIssueData(res)
+                    console.log(res)
                 }
             })
         }
@@ -81,7 +84,7 @@ const EditIssue = (props) => {
         event.preventDefault();
         const workItemData = {
             task: newWorkItem,
-            supportStaff: props.user._id
+            supportStaff: userId
         }
         await createWorkItem(workItemData).then((res) => {
             console.log(res)
@@ -188,7 +191,7 @@ const EditIssue = (props) => {
                         </div>
                         
                             <label className='column'>Work Performed</label>
-                                {issueData.work.length > 0 && issueData.work.map((workItem, i) =>
+                                {issueData.work && issueData.work.length > 0 && issueData.work.map((workItem, i) =>
                                     <div key={workItem._id}>
                                         <table>
                                             <caption>

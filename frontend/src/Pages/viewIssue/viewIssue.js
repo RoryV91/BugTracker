@@ -120,7 +120,7 @@ const ViewIssue = () => {
             </div>
             
             <h4>Support Details</h4>
-            {issueData.work.length > 0 && issueData.work.map((workItem, i) =>
+            {issueData.work && issueData.work.length > 0 && issueData.work.map((workItem, i) =>
                 <table key={workItem._id}>
                     <caption>
                         Work Item {(i++)+1}
