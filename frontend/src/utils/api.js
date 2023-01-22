@@ -6,8 +6,6 @@ import axios from 'axios';
 //===============================
 axios.defaults.baseURL = 'http://localhost:8000/';
 
-
-
 //===========================
 //   USERS DB API REQUESTS
 //===========================
@@ -38,6 +36,14 @@ axios.defaults.baseURL = 'http://localhost:8000/';
             }
         }
         const { data } = await axios.get(`users/view/${userId}`, config)
+        return data
+    }
+
+    //===================================
+    //   REQUEST TO VIEW A SINGLE USER
+    //===================================
+    export async function lookupNewUser(userId) {
+        const { data } = await axios.get(`users/lookup/${userId}`)
         return data
     }
 
@@ -72,6 +78,15 @@ axios.defaults.baseURL = 'http://localhost:8000/';
     //============================
     export async function createUser(email) {
         const { data } = await axios.post('users/request', email)
+        return data
+    }
+
+    //=============================
+    //   REQUEST TO SIGN UP USER
+    //=============================
+    export async function signUpUser(userNumber, userData ) {
+        console.log("userData: " + JSON.stringify(userData))
+        const { data } = await axios.post(`users/create/${userNumber}`, userData)
         return data
     }
 

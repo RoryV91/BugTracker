@@ -35,7 +35,7 @@ const EditUser = (props) => {
         setUserData({...userData, [event.target.name]: event.target.value })
     }
 
-    const handleSubmit = async (event, issueData) => {
+    const handleSubmit = async (event, userData) => {
         event.preventDefault();
         await updateUser(userData, userId).then((res) => {navigate(`/userList`, {replace: true})})
         }
@@ -55,41 +55,49 @@ const EditUser = (props) => {
                     <input
                         name="firstName"
                         value={userData.firstName}
+                        onChange={handleChange}
                     />
                     <label>Last Name</label>
                     <input
                         name="lastName"
                         value={userData.lastName}
+                        onChange={handleChange}
                     />
                     <label>E-Mail Address</label>
                     <input
                         name="email"
                         value={userData.email}
+                        onChange={handleChange}
                     />
-                    <label>Password</label>
-                    <input />
                     <label>User Group</label>
                     <select
                         name="userGroup"
                         value={userData.userGroup}
+                        onChange={handleChange}
                     >
                         <option value={0}>User</option>
                         <option value={1}>Support</option>
                         <option value={2}>Admin</option>
                     </select>
                     <div className="row">
-                    <button className="column">
-                        Submit
-                    </button>
-                    <button className="column column-offset-25">
-                        Delete
-                    </button>
-                    <button 
-                        className="column column-offset-25"
-                        onClick={() => navigate(`/userList`)}
-                    >
-                        Cancel
-                    </button>
+                        <button 
+                            className="column"
+                            onClick={handleSubmit}
+                        >
+                            Submit
+                        </button>
+                        <button 
+                            className="column column-offset-25"
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </button>
+                        <button 
+                            className="column column-offset-25"
+                            onClick={() => navigate(`/userList`)}
+                        >
+                            Cancel
+                        </button>
                     </div>
                 </form>  
             </div>

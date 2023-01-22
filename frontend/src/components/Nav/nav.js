@@ -9,6 +9,7 @@ const Nav = (props) => {
         props.setUser(null)
         navigate("/login", {replace: true});
     }
+
     return (
                 <ul className="row">
                     <h1 className="column">MAJOR</h1>
@@ -48,7 +49,10 @@ const Nav = (props) => {
                             </Link>
                         }
                         <div className="column">
-                        <button className="button button-outline" onClick={handleLogOut}>
+                        <button 
+                            className="button button-outline" 
+                            onClick={handleLogOut}
+                        >
                             Logout
                         </button>
                         </div>
@@ -56,7 +60,6 @@ const Nav = (props) => {
                     }
                 </ul>
     )
-
 }
 
 export default Nav

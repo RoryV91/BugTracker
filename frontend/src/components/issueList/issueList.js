@@ -31,9 +31,9 @@ const IssueList = () => {
 
     return (
         <div className="container">
-            <h1>HOME</h1>
-            <h2>Issue List</h2>
-            <table>
+            <h1>HOME 🏠</h1>
+            <h2>Issue List 📋</h2>
+            <table className="test">
                 <thead>
                     <tr>
                         <th>Summary</th>

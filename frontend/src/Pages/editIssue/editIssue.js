@@ -111,7 +111,7 @@ const EditIssue = (props) => {
         return (
             <>
                 <section className="container">
-                    <h1>Edit Issue</h1>
+                    <h1>Edit Issue 📝</h1>
                     <form>
                         <label>Summary</label>
                         {(props.user._id != issueData.postedBy) && (props.user.userGroup < 1 ) ?
@@ -223,7 +223,7 @@ const EditIssue = (props) => {
                                         </div>
                                     </div>
                                 )}
-                        {(props.user.userGroup == 2 )}
+                        {(props.user.userGroup == 2 )&&
                         <>
                             <div className="row">
                                 <label className='column'>New Work Item:</label>
@@ -246,6 +246,7 @@ const EditIssue = (props) => {
                                 </button>
                             </div>   
                         </>
+                        }
                         <div className='row'>
                         {(props.user._id == issueData.postedBy) || (props.user.userGroup >= 1 )  && 
                             <button 

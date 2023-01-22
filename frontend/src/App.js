@@ -59,13 +59,13 @@ function App() {
           
           <Route path="/login" element={<Login user={user} setUser={setUser} />}/>
           <Route path="/requestAccess" element={<RequestAccess />}/>
-          <Route path="/users/signup/:id" element={<SignUp user={user} setUser={setUser} />}/>
+          <Route path="/users/signup/:userId" element={<SignUp user={user} setUser={setUser} />}/>
           <Route element={<ProtectedRoute user={user} />}>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home user={user} setUser={setUser} />}/>
             <Route path="/editIssue/:issueId" element={<EditIssue user={user} />}/>
             <Route path="/viewIssue/:issueId" element={<ViewIssue user={user} />}/>
             <Route path="/newIssue" element={<NewIssue user={user} />}/>
-            <Route path="/editprofile" element={<EditProfile user={user} />}/>
+            <Route path="/editprofile" element={<EditProfile user={user} setUser={setUser} />}/>
             <Route path="/userList" element={<UserList user={user} />}/>
             <Route path="/myPosts" element={<UserIssues user={user} />}/> 
             <Route path="/editUser/:userId" element={<EditUser user={user} />}/>

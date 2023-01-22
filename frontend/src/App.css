@@ -1,7 +1,22 @@
+body {
+    /* background-color:mintcream; */
+    /* background-color: rgb(51, 51, 51);*/
+    color: rgb(76, 74, 74); 
+    background-color:lavender;
+}
+
 header {
-    border: 2px solid green;
+    border-bottom: 0.5vh solid #9b4dca;
 }
 
 .row {
     margin-top: 2vh;
+}
+
+.container {
+    margin-top: 4vh;
+}
+
+th, td {
+    border-color: #9b4dca;
 }

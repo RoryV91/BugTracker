@@ -89,7 +89,7 @@ const ViewIssue = () => {
                 </tbody>
             </table>
             <div className="row"> 
-                {issueData.status != 4 &&
+                {issueData.status != 4 && userData.userGroup >= 1 &&
                 <Link 
                     className="column column-25 column-offset-10" 
                     to={`/editIssue/${issueId}`}
@@ -108,6 +108,7 @@ const ViewIssue = () => {
                         Edit
                     </button>
                 </Link>}
+                {userData.userGroup >= 1 &&
                 <div className="column column-25 column-offset-10">
                     <button 
                         className=" button"
@@ -116,6 +117,7 @@ const ViewIssue = () => {
                         Delete
                     </button>
                 </div>
+                }
             </div>
             
             <h4>Support Details</h4>

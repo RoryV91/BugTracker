@@ -44,7 +44,7 @@ const NewIssue = () => {
     return (
         <>
             <section className="container">
-                <h1>Post a new issue</h1>
+                <h1>POST a new issue/bug ⚠️🐛</h1>
                 <form>
                     <label>Summary</label>
                     <input 

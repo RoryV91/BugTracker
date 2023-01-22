@@ -34,7 +34,7 @@ const UserList = () => {
     return (
         <>
             <div className="container">
-                <h1>USER LIST</h1>
+                <h1>User List 📇</h1>
                 <table>
                     <thead>
                         <tr>
@@ -73,8 +73,10 @@ const UserList = () => {
                                                 lastName: userInfo.lastName,
                                                 userGroup: userInfo.userGroup
                                             }}
-                                            >    
-                                            <button>Edit</button> 
+                                            >
+                                            <div className="column">
+                                            <button>Edit</button>
+                                            </div>
                                         </Link>
                                     }
                                     <button>

@@ -178,6 +178,8 @@ router.put('/update/:id', security.isAuthenticated, async (req, res) => {
 //   UPDATE ROUTE / SETUP INITIAL USER INFO
 //============================================
 router.post('/create/:id', async (req, res) => {
+    console.log(req.body)
+    console.log(req.body.email)
  if (req.body.password && req.body.firstName && req.body.lastName) {
     const hashPassword = await bcrypt.hash(req.body.password, saltRounds)
     let verifyUser = {
@@ -188,7 +190,9 @@ router.post('/create/:id', async (req, res) => {
     }
     User.findByIdAndUpdate(req.params.id, verifyUser, { new: true })
         .then((user) => {
+            console.log("next step")
             if (user) {
+                console.log("user exists")
                 const payload = {
                     firstName: user.firstName,
                     lastName: user.lastName,
@@ -223,6 +227,7 @@ router.post('/create/:id', async (req, res) => {
                     email: user.email,
                     userId: user._id
                 })
+                console.log("success")
             } else {
                 res.sendStatus(404)
             }
@@ -304,10 +309,26 @@ router.get('/list', security.isAdmin, async (req, res) => {
     });
 })
 
-//=======================
-//    VIEW SINGLE USER
-//=======================
+//======================
+//   VIEW SINGLE USER
+//======================
 router.get('/view/:id', security.isAuthenticated, (req, res) => {
+    db.User.findById(
+        req.params.id ,
+        (err, user) => {
+            if (err) {
+                res.sendStatus(500)
+            } else {
+                res.json(user) 
+            }
+        }
+    )
+})
+
+//==============================
+//   UNPROTECTED LOOKUP EMAIL
+//==============================
+router.get('/lookup/:id', (req, res) => {
     db.User.findById(
         req.params.id ,
         (err, user) => {
@@ -334,7 +355,7 @@ router.get('/supportList', security.isAdmin, async (req, res) => {
 //============================
 router.post('/invite', security.isAdmin, async (req, res) => {
     var mailOptions = {
-    from: '',
+    from: 'DoNotReply.MAJOR-Bugtracker@gmail.com',
     to: req.body.email,
     subject: 'Your access link to Major',
     text: `Hello! \n` + `This is your unique link to sign up for Major: \n` + '\n' + `Please click the link to sign up for your account. Contact your administrator for any firther questions. Have a nice day! \n` + req.body.base_url + `\n` + `Thanks! \n Major Admin Team`
