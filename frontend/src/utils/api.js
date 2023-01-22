@@ -4,7 +4,7 @@ import axios from 'axios';
 //===============================
 //   FOR TESTING PURPOSES ONLY
 //===============================
-//axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.baseURL = 'http://localhost:8000/';
 
 //===========================
 //   USERS DB API REQUESTS
