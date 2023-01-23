@@ -226,7 +226,7 @@ const EditIssue = (props) => {
                                         </div>
                                     </div>
                                 )}
-                        {(props.user.userGroup == 2 )&&
+                        {(props.user.userGroup >= 1  )&&
                         <>
                             <div className="row">
                                 <label className='column'>New Work Item:</label>
