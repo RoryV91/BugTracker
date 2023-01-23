@@ -5,6 +5,7 @@ import { statusDescriptions, priorityLevels } from '../../utils/info'
 
 
 const IssueList = () => {
+    const navigate = useNavigate();
     const [userData, setUserData] = useState(
         { 
         userId: localStorage.getItem('userId'),
