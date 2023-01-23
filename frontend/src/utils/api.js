@@ -64,12 +64,15 @@ import axios from 'axios';
     //   REQUEST TO GET LIST OF ALL SUPPORT USERS
     //==============================================
     export async function getAllSupport() {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                method: 'get',
+                url:`https://major-bugtracker.herokuapp.com/users/supportList`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.get('users/supportList', config)
+        )
         return data
     }
 
@@ -77,12 +80,15 @@ import axios from 'axios';
     //   REQUEST TO GET LIST OF ALL USERS
     //======================================
     export async function getAllUsers() {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                method: 'get',
+                url:`https://major-bugtracker.herokuapp.com/users/list`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.get('users/list', config)
+        )
         return data
     }
     
