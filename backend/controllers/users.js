@@ -108,6 +108,7 @@ router.post('/login', (req, res) => {
 //========================================
 router.put('/update/:id', security.isAuthenticated, async (req, res) => {
     let updatedUser;
+    console.log(JSON.stringify(req.body));
     if (req.body.email && req.body.firstName && req.body.lastName ) {
         if (req.body.password && req.body.password.length > 0) {
             const hashPassword = await bcrypt.hash(req.body.password, saltRounds)
