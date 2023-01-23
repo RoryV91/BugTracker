@@ -29,6 +29,7 @@ const ViewIssue = () => {
         getSingleIssue(issueId).then((res) => {
             if(mounted) {
                 setIssueData(res)
+                console.log("res: " + JSON.stringify(res))
             }
         })
         return () => mounted = false;
