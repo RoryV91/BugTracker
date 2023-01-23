@@ -2,11 +2,16 @@ import {useState, useEffect} from 'react'
 import { deleteUser, getAllUsers, sendEmail } from '../../utils/api'
 import { Link, useNavigate } from "react-router-dom";
 import { userGroupNames } from '../../utils/info'
+import { ToastContainer, toast } from 'react-toastify';
+import { injectStyle } from "react-toastify/dist/inject-style";
+
+
+
 
 const UserList = () => {
     const navigate = useNavigate(); 
     const [users, setUsers] = useState([]);
-
+    injectStyle();
     useEffect(() => {
             let  mounted = true;
             getAllUsers().then((res) => {
@@ -17,10 +22,14 @@ const UserList = () => {
             return () => mounted = false;
         }, [])
 
+    const showEmailSent = () => {
+        toast('Email was sent!');
+    }
+
     const inviteUser = (id, email) => {
         sendEmail(id, email)
         .then(
-            (res) => {console.log(res); alert(res)}
+            (res) => {showEmailSent();}
         )
             .then((res) => {navigate(`/userList`, {replace: true})})
     }

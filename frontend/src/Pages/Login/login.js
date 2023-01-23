@@ -2,24 +2,25 @@ import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import 'node_modules/react-toastify/dist/ReactToastify.css';
+import { injectStyle } from "react-toastify/dist/inject-style";
+
 
 
 const Login = (props) => {
-
+    injectStyle();
     const navigate = useNavigate(); 
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: ''
     })
 
-    const showError = () => {
-        toast('Email address or password do not match! Please try again.');
-        setLoginForm({
-            email: '',
-            password: ''
-        });
-    }
+        const showError = () => {
+            toast('Email address or password do not match! Please try again.');
+            setLoginForm({
+                email: '',
+                password: ''
+            });
+        }
 
     const handleChange = (event) => {
         setLoginForm({ ...loginForm, [event.target.name]: event.target.value })
