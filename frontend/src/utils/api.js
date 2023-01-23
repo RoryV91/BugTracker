@@ -144,17 +144,19 @@ import axios from 'axios';
     //   REQUEST TO VIEW A SINGLE ISSUE
     //====================================
     export async function getSingleIssue(issueId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
-            }
-        }
+        // const config = {
+        //     headers: {
+        //         'Authorization': localStorage.getItem('accessToken')
+        //     }
+        // }
         const { data } = await axios(
             {
                 method: 'get',
-                url:`https://major-bugtracker.herokuapp.com/issues/view/${issueId}`
-            },
-            config)
+                url:`https://major-bugtracker.herokuapp.com/issues/view/${issueId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
+            })
         console.log(JSON.stringify(data))
         return data
     }
