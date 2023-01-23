@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
