@@ -85,7 +85,7 @@ const Login = (props) => {
                             <button>Request Access</button>
                             </Link>
                     </form>
-                    <ToastContainer position="bottom-center" autoClose={3000} closeOnClick hideProgressBar={true}/>
+                    <ToastContainer position="top-right" autoClose={3000} closeOnClick />
                 </div>
             </div>
         </>

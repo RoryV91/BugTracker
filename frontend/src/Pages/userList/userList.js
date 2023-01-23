@@ -98,6 +98,7 @@ const UserList = () => {
                     </tbody>
                     )}
                 </table>
+                <ToastContainer position="top-right" autoClose={3000} closeOnClick />
             </div>
         </>
     )
