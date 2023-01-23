@@ -26,13 +26,12 @@ const ViewIssue = () => {
     )
     useEffect(async() =>  {
         let  mounted = true;
-        const tempIssueData = await getSingleIssue(issueId).then((res) => {
+        await getSingleIssue(issueId).then((res) => {
             if(mounted) {
                 setIssueData(res)
                 console.log("res: " + JSON.stringify(issueData))
             }
         })
-        console.log(JSON.stringify(tempIssueData))
         return () => mounted = false;
     }, [])
 
@@ -113,7 +112,6 @@ const ViewIssue = () => {
                 <div className="column column-25 column-offset-10">
                     <button 
                         className=" button"
-                        onClick={handleDelete}
                     >
                         Delete
                     </button>
