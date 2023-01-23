@@ -55,10 +55,13 @@ router.get('/user/:id', security.isAuthenticated, (req, res) => {
 router.get('/view/:id', security.isAuthenticated, (req, res) => {
     db.Issue.findById(
         req.params.id ,
+        console.log(req.params.id),
         (err, issue) => {
+            console.log(JSON.stringify(issue))
             if (err) {
                 res.sendStatus(500)
             } else {
+                console.log(JSON.stringify(issue))
                 res.json(issue) 
             }
         }

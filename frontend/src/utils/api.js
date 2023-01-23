@@ -148,6 +148,7 @@ import axios from 'axios';
             }
         }
         const { data } = await axios.get(`issues/view/${issueId}`, config)
+        console.log(JSON.stringify(data))
         return data
     }
 
