@@ -37,7 +37,8 @@ const EditUser = (props) => {
 
     const handleSubmit = async (event, userData) => {
         event.preventDefault();
-        await updateUser(userData, userId).then((res) => {navigate(`/userList`, {replace: true})})
+        await updateUser(userData, userId);
+        navigate(`/userList`, {replace: true})
         }
 
     const handleDelete = async (event) => {
