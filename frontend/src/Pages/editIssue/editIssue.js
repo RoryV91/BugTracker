@@ -171,7 +171,7 @@ const EditIssue = (props) => {
                                         onChange={handleChange} 
                                     >
                                         <option value={null}>Unassigned</option>
-                                        {supportUsers.length > 0 && supportUsers.map(supportUser =>
+                                        {supportUsers && supportUsers.length > 0 && supportUsers.map(supportUser =>
                                             <option 
                                                 key={supportUser._id}
                                                 value={supportUser._id}

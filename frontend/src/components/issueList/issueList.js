@@ -46,7 +46,7 @@ const IssueList = () => {
                         <th>Action</th>
                     </tr>
                 </thead>
-                {issues.map(issue => 
+                {issues && issues.map(issue => 
                 <tbody key={issue._id}>
                     <tr>
                         <td>{issue.summary}</td> 
