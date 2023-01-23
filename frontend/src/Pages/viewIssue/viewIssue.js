@@ -24,16 +24,16 @@ const ViewIssue = (props) => {
             userGroup: localStorage.getItem('userGroup')
         }
     )
-    useEffect(async() =>  {
-        let  mounted = true;
-        await getSingleIssue(issueId).then((res) => {
-            if(mounted) {
-                setIssueData(res)
-                console.log("res: " + JSON.stringify(issueData))
-            }
-        })
-        return () => mounted = false;
-    }, [])
+    // useEffect(async() =>  {
+    //     let  mounted = true;
+    //     await getSingleIssue(issueId).then((res) => {
+    //         if(mounted) {
+    //             setIssueData(res)
+    //             console.log("res: " + JSON.stringify(issueData))
+    //         }
+    //     })
+    //     return () => mounted = false;
+    // }, [])
 
 //    const handleDelete = async (event) => {
 //        event.preventDefault();
