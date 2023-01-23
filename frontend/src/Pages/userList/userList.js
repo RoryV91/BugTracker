@@ -79,7 +79,9 @@ const UserList = () => {
                                             </div>
                                         </Link>
                                     }
-                                    <button>
+                                    <button
+                                        onClick={handleDelete}
+                                    >
                                         Delete
                                     </button>
                                 </>

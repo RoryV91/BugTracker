@@ -32,12 +32,15 @@ import axios from 'axios';
     //   REQUEST TO VIEW A SINGLE USER
     //===================================
     export async function getSingleUser(userId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {
+                method: 'get',
+                url:`https://major-bugtracker.herokuapp.com/users/view/${userId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.get(`users/view/${userId}`, config)
+        )
         return data
     }
 
@@ -45,7 +48,15 @@ import axios from 'axios';
     //   REQUEST TO VIEW A SINGLE USER UNAUTHED
     //============================================
     export async function lookupNewUser(userId) {
-        const { data } = await axios.get(`users/lookup/${userId}`)
+        const { data } = await axios(
+            {
+                method: 'get',
+                url:`https://major-bugtracker.herokuapp.com/users/lookup/${userId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
+            }
+        )
         return data
     }
 
@@ -87,8 +98,16 @@ import axios from 'axios';
     //   REQUEST TO SIGN UP USER
     //=============================
     export async function signUpUser(userNumber, userData ) {
-        console.log("userData: " + JSON.stringify(userData))
-        const { data } = await axios.post(`users/create/${userNumber}`, userData)
+        const { data } = await axios(
+            {
+                data: userData,
+                method: 'post',
+                url:`https://major-bugtracker.herokuapp.com/users/create/${userNumber}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
+            }
+        )
         return data
     }
 
@@ -96,12 +115,16 @@ import axios from 'axios';
     //   REQUEST TO UPDATE USER
     //============================
     export async function updateUser(userData, userId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                data: userData,
+                method: 'put',
+                url:`https://major-bugtracker.herokuapp.com/users/update/${userId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        } 
-        const { data } = await axios.put(`users/update/${userId}`, userData, config)
+        )
         return data
     }
 
@@ -109,12 +132,15 @@ import axios from 'axios';
     //   REQUEST TO DELETE USER
     //============================
     export async function deleteUser(user_id) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                method: 'delete',
+                url:`https://major-bugtracker.herokuapp.com/users/delete/${user_id}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.delete(`users/delete/${user_id}`, config)
+        )
         return data
     }
 
@@ -144,11 +170,6 @@ import axios from 'axios';
     //   REQUEST TO VIEW A SINGLE ISSUE
     //====================================
     export async function getSingleIssue(issueId) {
-        // const config = {
-        //     headers: {
-        //         'Authorization': localStorage.getItem('accessToken')
-        //     }
-        // }
         const { data } = await axios(
             {
                 method: 'get',
@@ -157,7 +178,6 @@ import axios from 'axios';
                     'Authorization': localStorage.getItem('accessToken')
                 }
             })
-        console.log(JSON.stringify(data))
         return data
     }
 
@@ -165,12 +185,15 @@ import axios from 'axios';
     //   REQUEST FOR ISSUES BY USER ID
     //===================================
     export async function getUserIssues(userId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                method: 'get',
+                url:`https://major-bugtracker.herokuapp.com/issues/user/${userId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.get(`issues/user/${userId}`, config)
+        )
         return data
     }
 
@@ -204,12 +227,15 @@ import axios from 'axios';
     //   REQUEST TO DELETE ISSUE
     //=============================
     export async function deleteIssue(issueId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                method: 'delete',
+                url:`https://major-bugtracker.herokuapp.com/issues/delete/${issueId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.delete(`issues/delete/${issueId}`, config)
+        )
         return data
     }
 
@@ -217,19 +243,23 @@ import axios from 'axios';
     //   REQUEST TO UPDATE ISSUE
     //=============================
     export async function updateIssue(issueData, issueId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
-            }
-        } 
         const userType = await localStorage.getItem('userGroup')
         let route = 'issues/user/update/'
-        if (userType == 1) {
-            route = 'issues/support/update/'
-        } else if (userType == 2) {
-            route = 'issues/admin/update/'
-        }
-        const { data } = await axios.put(`${route}${issueId}`, issueData, config)
+            if (userType == 1) {
+                route = 'issues/support/update/'
+            } else if (userType == 2) {
+                route = 'issues/admin/update/'
+            }
+        const { data } = await axios(
+            {   
+                data: issueData,
+                method: 'put',
+                url:`https://major-bugtracker.herokuapp.com/${route}${issueId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
+            }
+        )
         return data
     }
 
@@ -255,12 +285,16 @@ import axios from 'axios';
     //   REQUEST TO ADD WORKITEM TO ISSUE
     //======================================
     export async function addWorkItem(workItemId, issueId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                data: workItemId,
+                method: 'put',
+                url:`https://major-bugtracker.herokuapp.com/issues/support/add/${issueId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.put(`issues/support/add/${issueId}`, workItemId, config)
+        )
         return data
     }
     
@@ -268,12 +302,16 @@ import axios from 'axios';
     //   REQUEST TO UPDATE WORKITEM
     //================================
     export async function updateWorkItem(workItemData, workItemId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                data: workItemData,
+                method: 'put',
+                url:`https://major-bugtracker.herokuapp.com/workItems/update/${workItemId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        } 
-        const { data } = await axios.put(`workItems/update/${workItemId}`, workItemData, config)
+        )
         return data
     }
     
@@ -281,12 +319,15 @@ import axios from 'axios';
     //   REQUEST TO DELETE WORKITEM
     //================================
     export async function deleteWorkItem(workItemId) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                method: 'delete',
+                url:`https://major-bugtracker.herokuapp.com/workItems/delete/${workItemId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.delete(`workItems/delete/${workItemId}`, config)
+        )
         return data
     }
     
@@ -297,11 +338,15 @@ import axios from 'axios';
         const workItemInfo = {
             workItemId: workItemId
         }
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                data: workItemInfo,
+                method: 'put',
+                url:`https://major-bugtracker.herokuapp.com/issues/support/remove/${issueId}`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-       const { data } = await axios.put(`issues/support/remove/${issueId}`, workItemInfo, config)
-       return data
+        )
+        return data
     }
