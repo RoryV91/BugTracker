@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.min.css';
+import '../../../public/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
 
