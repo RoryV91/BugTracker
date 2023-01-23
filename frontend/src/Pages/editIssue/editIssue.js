@@ -270,10 +270,10 @@ const EditIssue = (props) => {
                             <button
                                 className="column column-offset-10"
                                 name="closedBy"
-                                value={props.user._id}
+                                value={localStorage.getItem('userId')}
                                 onClick={(event) => {
                                     issueData.status = 4;
-                                    issueData.closedBy = props.user._id;
+                                    issueData.closedBy = localStorage.getItem('userId');
                                     handleSubmit(event, issueData)
                                 }}
                             >
