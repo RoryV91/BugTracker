@@ -8,9 +8,8 @@ I wanted to demonstrate some of the skills I acquired at General Assembly to bui
 This project utilizes the MERN stack; or MongoDB, Express, React.js, and Node.js. This also uses axios to make API calls to the backend. 
 
 Additionally I employed the following technologies to develop this web application:
--Bcrypt
--CORS
--CryptoJS
+
+-Bcrypt 
 -JSONWebToken
 -Mongoose
 -Nodemailer
@@ -30,12 +29,17 @@ MAJOR offers some good features in a simple package:
 -Simple, professsional styling using Milligram.css
 
 # UNSOLVED PROBLEMS
-
+I did not have time to implement CryptoJS, I will do so in a later build to showcase that ability. I did not have time to implement the refresh tokens or create real error handling. Most of this is happy path, but it should be difficult to veer from that.
 
 # WIREFRAMES
-
+Wireframes can be found in the 'Planning' folder of the project.
 
 # USER STORIES
+"As a manager of a local insurance agency, this is a great tool to report and track issues for our proprietary software. It has a no-frills, easy-to-use interface for someone who is not familiar with tech or computers like me. I post the issue, and support is notified some how and fixes it; I can even see updates as they happen."
 
+"As a support tech for an unnamed insurance company, this tool makes it easy for me to keep track of tickets assigned to me. I am notified in the portal of any new tickets assigned to me and I can mark them as received, in progress, in review, or closed. I can add steps taken or reasoning for changing status, such as closing a duplicate ticket. This is pretty impressive knowing that a single developer made this all on their own."
+
+"As a support admin, I don't have to do too much here because of the easy user interface. Even less knowledgeable employees don't make mistakes because it's hard to mess up a issue submission. If they do, I can correct problems with ease. Really, all I have to do is change an employee's status from basic user to support if they are transferred to that team, or vice versa."
 
 # ACKNOWLEDGEMENTS
+Many thanks to the many developers at StackOverflow who have ran into the many errors that I encountered during development, and posted questions and an **even greater** thanks to the many developers who answered those questions in a succinct manner.

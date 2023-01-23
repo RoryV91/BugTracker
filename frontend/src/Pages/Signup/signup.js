@@ -31,9 +31,7 @@ const Signup = (props) => {
             verified: userData.verified
     
         }
-        console.log("handle submit 1")
         await signUpUser( userNumber, userDataCopy).then((data) => {
-            console.log(JSON.stringify(data));
                 if (data.accessToken) {
                     localStorage.accessToken = data.accessToken;
                     localStorage.refreshToken = data.refreshToken;
@@ -42,11 +40,8 @@ const Signup = (props) => {
                     localStorage.userGroup = data.userGroup;
                     props.setUser(data);
                     navigate("/", {replace: true})
-                } else {
-                        console.log("you are an idiot")
-                }
+                } 
             })
-        console.log("handle submit 2")
     }
 
     useEffect(() => {
