@@ -31,5 +31,6 @@
   "main": "server.js",
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "homepage": "https://major-bugtracker.herokuapp.com/"
 }

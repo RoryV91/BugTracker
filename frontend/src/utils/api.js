@@ -16,16 +16,16 @@ import axios from 'axios';
     //   REQUEST TO GET USER DATA
     //==============================
     export async function getUserData(userId) {
-        // const { data } = await axios.get('users/' + userId)
-        // return data
+        const { data } = await axios.get('users/' + userId)
+        return data
     }
 
     //==================================
     //   REQUEST TO LOG IN TO ACCOUNT
     //==================================
     export async function loginToAccount(formData) {
-        // const { data } = await axios.post('users/login', formData)
-        // return data
+        const { data } = await axios.post('users/login', formData)
+        return data
     }
 
     //===================================
@@ -96,9 +96,9 @@ import axios from 'axios';
     //   REQUEST TO CREATE USER
     //============================
     export async function createUser(email) {
-        // const { data } = await axios.post('users/request', email)
-        // return data
-    }
+        const { data } = await axios.post('users/request', email)
+        return data
+     }
 
     //=============================
     //   REQUEST TO SIGN UP USER
@@ -154,18 +154,18 @@ import axios from 'axios';
     //   REQUEST TO SEND EMAIL TO UNVERIFIED USER
     //==============================================
     export async function sendEmail(id, email) {
-        // const config = {
-        //     headers: {
-        //         'Authorization': localStorage.getItem('accessToken')
-        //     }, 
-        // }
-        // const emailData= {
-        //     email: email,
-        //     base_url: `https://major-bugtracker.herokuapp.com/users/signup/${id}`
-        // }
-        // console.log(emailData)
-        // const { data } = await axios.post(`users/invite`, emailData, config)
-        // return data
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }, 
+        }
+        const emailData= {
+            email: email,
+            base_url: `https://major-bugtracker.herokuapp.com/users/signup/${id}`
+        }
+        console.log(emailData)
+        const { data } = await axios.post(`users/invite`, emailData, config)
+        return data
     }
 
 //============================
@@ -207,26 +207,26 @@ import axios from 'axios';
     //   REQUEST TO GET ALL ISSUES
     //===============================
     export async function getAllIssues() {
-        // const config = {
-        //     headers: {
-        //         'Authorization': localStorage.getItem('accessToken')
-        //     }
-        // }
-        // const { data } = await axios.get('issues/list', config)
-        // return data
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }
+        }
+        const { data } = await axios.get('issues/list', config)
+        return data
     }
 
     //===============================
     //   REQUEST TO POST NEW ISSUE
     //===============================
     export async function createIssue(issueData) {
-        // const config = {
-        //     headers: {
-        //         'Authorization': localStorage.getItem('accessToken')
-        //     }
-        // }
-        // const { data } = await axios.post('issues/create', issueData, config)
-        // return data
+        const config = {
+            headers: {
+                'Authorization': localStorage.getItem('accessToken')
+            }
+        }
+        const { data } = await axios.post('issues/create', issueData, config)
+        return data
     }
 
     //=============================
