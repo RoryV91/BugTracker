@@ -35,7 +35,7 @@ const EditUser = (props) => {
         setUserData({...userData, [event.target.name]: event.target.value })
     }
 
-    const handleSubmit = async (event, userData) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         await updateUser(userData, userId);
         navigate(`/userList`, {replace: true})
