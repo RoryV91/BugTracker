@@ -24,14 +24,15 @@ const ViewIssue = () => {
         userGroup: localStorage.getItem('userGroup')
         }
     )
-    useEffect(() => {
+    useEffect(async() =>  {
         let  mounted = true;
-        getSingleIssue(issueId).then((res) => {
+        const tempIssueData = await getSingleIssue(issueId).then((res) => {
             if(mounted) {
                 setIssueData(res)
                 console.log("res: " + JSON.stringify(issueData))
             }
         })
+        console.log(JSON.stringify(tempIssueData))
         return () => mounted = false;
     }, [])
 
