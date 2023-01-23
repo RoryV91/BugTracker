@@ -278,14 +278,19 @@ import axios from 'axios';
     //   REQUEST TO CREATE WORKITEM
     //================================
     export async function createWorkItem(workItemData) {
-        const config = {
-            headers: {
-                'Authorization': localStorage.getItem('accessToken')
+        const { data } = await axios(
+            {   
+                data: workItemData,
+                method: 'post',
+                url:`https://major-bugtracker.herokuapp.com/workItems/create`,
+                headers: {
+                    'Authorization': localStorage.getItem('accessToken')
+                }
             }
-        }
-        const { data } = await axios.post('workItems/create', workItemData, config)
+        )
         return data
     }
+
 
     //======================================
     //   REQUEST TO ADD WORKITEM TO ISSUE
