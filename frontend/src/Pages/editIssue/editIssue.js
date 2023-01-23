@@ -100,7 +100,7 @@ const EditIssue = (props) => {
         })
     }
         
-    const handleSubmit = async (event, issueData) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         await updateIssue(issueData, issueId).then((res) => {navigate(`/viewIssue/${issueId}`, {replace: true})})
         }
