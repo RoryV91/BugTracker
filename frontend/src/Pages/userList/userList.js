@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import { deleteUser, getAllUsers, sendEmail } from '../../utils/api'
 import { Link, useNavigate } from "react-router-dom";
 import { userGroupNames } from '../../utils/info'
-import '../../ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
 
