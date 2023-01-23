@@ -2,7 +2,7 @@ import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'node_modules/react-toastify/dist/ReactToastify.css';
 
 
 const Login = (props) => {
@@ -44,8 +44,9 @@ const Login = (props) => {
                 } else {
                         window.alert("Login error! Email/password do not match!");
                 }
+            
             })
-        
+            .catch((err) => {showError()})
     }
 
     return (
