@@ -116,13 +116,15 @@ router.put('/update/:id', security.isAuthenticated, async (req, res) => {
                 email: req.body.email,
                 password: hashPassword,
                 firstName: req.body.firstName,
-                lastName: req.body.lastName
+                lastName: req.body.lastName,
+                userGroup: req.body.userGroup
             }
         } else {
             updatedUser = {
                 email: req.body.email,
                 firstName: req.body.firstName,
-                lastName: req.body.lastName
+                lastName: req.body.lastName,
+                userGroup: req.body.userGroup
             }
         }
         User.findOne({ email: req.body.email })
