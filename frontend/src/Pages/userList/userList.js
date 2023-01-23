@@ -3,15 +3,13 @@ import { deleteUser, getAllUsers, sendEmail } from '../../utils/api'
 import { Link, useNavigate } from "react-router-dom";
 import { userGroupNames } from '../../utils/info'
 import { ToastContainer, toast } from 'react-toastify';
-import { injectStyle } from "react-toastify/dist/inject-style";
-
+import 'react-toastify/dist/ReactToastify.min.css';
 
 
 
 const UserList = () => {
     const navigate = useNavigate(); 
     const [users, setUsers] = useState([]);
-    injectStyle();
     useEffect(() => {
             let  mounted = true;
             getAllUsers().then((res) => {

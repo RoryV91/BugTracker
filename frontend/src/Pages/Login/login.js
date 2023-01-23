@@ -2,12 +2,11 @@ import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { injectStyle } from "react-toastify/dist/inject-style";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 
 
 const Login = (props) => {
-    injectStyle();
     const navigate = useNavigate(); 
     const [loginForm, setLoginForm] = useState({
         email: '',
