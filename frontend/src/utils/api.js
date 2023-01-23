@@ -37,15 +37,15 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-        const { data } = await axios.get(`${process.env.BASE_URL}users/view/${userId}`, config)
+        const { data } = await axios.get(`users/view/${userId}`, config)
         return data
     }
 
-    //===================================
-    //   REQUEST TO VIEW A SINGLE USER
-    //===================================
+    //============================================
+    //   REQUEST TO VIEW A SINGLE USER UNAUTHED
+    //============================================
     export async function lookupNewUser(userId) {
-        const { data } = await axios.get(`${process.env.BASE_URL}users/lookup/${userId}`)
+        const { data } = await axios.get(`users/lookup/${userId}`)
         return data
     }
 
@@ -88,7 +88,7 @@ import axios from 'axios';
     //=============================
     export async function signUpUser(userNumber, userData ) {
         console.log("userData: " + JSON.stringify(userData))
-        const { data } = await axios.post(`${process.env.BASE_URL}users/create/${userNumber}`, userData)
+        const { data } = await axios.post(`users/create/${userNumber}`, userData)
         return data
     }
 
@@ -101,7 +101,7 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         } 
-        const { data } = await axios.put(`${process.env.BASE_URL}users/update/${userId}`, userData, config)
+        const { data } = await axios.put(`users/update/${userId}`, userData, config)
         return data
     }
 
@@ -114,7 +114,7 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-        const { data } = await axios.delete(`${process.env.BASE_URL}users/delete/${user_id}`, config)
+        const { data } = await axios.delete(`users/delete/${user_id}`, config)
         return data
     }
 
@@ -149,7 +149,12 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-        const { data } = await axios.get(`${process.env.BASE_URL}issues/view/${issueId}`, config)
+        const { data } = await axios(
+            {
+                method: 'get',
+                url:`https://major-bugtracker.herokuapp.com/issues/view/${issueId}`
+            },
+            config)
         console.log(JSON.stringify(data))
         return data
     }
@@ -163,7 +168,7 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-        const { data } = await axios.get(`${process.env.BASE_URL}issues/user/${userId}`, config)
+        const { data } = await axios.get(`issues/user/${userId}`, config)
         return data
     }
 
@@ -202,7 +207,7 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-        const { data } = await axios.delete(`${process.env.BASE_URL}issues/delete/${issueId}`, config)
+        const { data } = await axios.delete(`issues/delete/${issueId}`, config)
         return data
     }
 
@@ -222,7 +227,7 @@ import axios from 'axios';
         } else if (userType == 2) {
             route = 'issues/admin/update/'
         }
-        const { data } = await axios.put(`${process.env.BASE_URL}${route}${issueId}`, issueData, config)
+        const { data } = await axios.put(`${route}${issueId}`, issueData, config)
         return data
     }
 
@@ -253,7 +258,7 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-        const { data } = await axios.put(`${process.env.BASE_URL}issues/support/add/${issueId}`, workItemId, config)
+        const { data } = await axios.put(`issues/support/add/${issueId}`, workItemId, config)
         return data
     }
     
@@ -266,7 +271,7 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         } 
-        const { data } = await axios.put(`${process.env.BASE_URL}workItems/update/${workItemId}`, workItemData, config)
+        const { data } = await axios.put(`workItems/update/${workItemId}`, workItemData, config)
         return data
     }
     
@@ -279,7 +284,7 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-        const { data } = await axios.delete(`${process.env.BASE_URL}workItems/delete/${workItemId}`, config)
+        const { data } = await axios.delete(`workItems/delete/${workItemId}`, config)
         return data
     }
     
@@ -295,6 +300,6 @@ import axios from 'axios';
                 'Authorization': localStorage.getItem('accessToken')
             }
         }
-       const { data } = await axios.put(`${process.env.BASE_URL}issues/support/remove/${issueId}`, workItemInfo, config)
+       const { data } = await axios.put(`issues/support/remove/${issueId}`, workItemInfo, config)
        return data
     }
