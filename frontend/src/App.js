@@ -60,15 +60,15 @@ function App() {
           <Route path="/login" element={<Login user={user} setUser={setUser} />}/>
           <Route path="/requestAccess" element={<RequestAccess />}/>
           <Route path="/users/signup/:userId" element={<SignUp user={user} setUser={setUser} />}/>
-          <Route element={<ProtectedRoute user={user} />}>
+          <Route element={<ProtectedRoute user={user} setUser={setUser}/>}>
             <Route path="/" element={<Home user={user} setUser={setUser} />}/>
-            <Route path="/editIssue/:issueId" element={<EditIssue user={user} />}/>
-            <Route path="/viewIssue/:issueId" element={<ViewIssue user={user} />}/>
-            <Route path="/newIssue" element={<NewIssue user={user} />}/>
+            <Route path="/editIssue/:issueId" element={<EditIssue user={user} setUser={setUser} />}/>
+            <Route path="/viewIssue/:issueId" element={<ViewIssue user={user} setUser={setUser} />}/>
+            <Route path="/newIssue" element={<NewIssue user={user} setUser={setUser} />}/>
             <Route path="/editprofile" element={<EditProfile user={user} setUser={setUser} />}/>
-            <Route path="/userList" element={<UserList user={user} />}/>
-            <Route path="/myPosts" element={<UserIssues user={user} />}/> 
-            <Route path="/editUser/:userId" element={<EditUser user={user} />}/>
+            <Route path="/userList" element={<UserList user={user} setUser={setUser} />}/>
+            <Route path="/myPosts" element={<UserIssues user={user} setUser={setUser} />}/> 
+            <Route path="/editUser/:userId" element={<EditUser user={user} setUser={setUser} />}/>
           </Route>
           <Route path="*" element={<Navigate replace to="/" />}/>
         </Routes>
