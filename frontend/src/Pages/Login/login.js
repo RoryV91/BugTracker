@@ -1,7 +1,8 @@
 import {useState} from 'react'
 import { loginToAccount } from '../../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = (props) => {
@@ -11,6 +12,14 @@ const Login = (props) => {
         email: '',
         password: ''
     })
+
+    const showError = () => {
+        toast('Email address or password do not match! Please try again.');
+        setLoginForm({
+            email: '',
+            password: ''
+        });
+    }
 
     const handleChange = (event) => {
         setLoginForm({ ...loginForm, [event.target.name]: event.target.value })
@@ -74,6 +83,7 @@ const Login = (props) => {
                             <button>Request Access</button>
                             </Link>
                     </form>
+                    <ToastContainer position="bottom-center" autoClose={3000} closeOnClick hideProgressBar={true}/>
                 </div>
             </div>
         </>

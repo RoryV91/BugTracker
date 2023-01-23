@@ -24,12 +24,11 @@ const ViewIssue = (props) => {
             userGroup: localStorage.getItem('userGroup')
         }
     )
-    useEffect(async() =>  {
+    useEffect(() =>  {
         let  mounted = true;
-        await getSingleIssue(issueId).then((res) => {
+        getSingleIssue(issueId).then((res) => {
             if(mounted) {
                 setIssueData(res)
-                console.log("res: " + JSON.stringify(issueData))
             }
         })
         return () => mounted = false;
