@@ -40,7 +40,7 @@ const EditIssue = (props) => {
             getSingleIssue(issueId).then((res) => {
                 if(mounted) {
                     setIssueData(res)
-                    console.log("res: " + JSON.stringify(res))
+                    console.log("res: " + JSON.stringify(issueData))
                 }
             })
             .then(
