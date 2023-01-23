@@ -24,29 +24,29 @@ const ViewIssue = (props) => {
             userGroup: localStorage.getItem('userGroup')
         }
     )
-    // useEffect(async() =>  {
-    //     let  mounted = true;
-    //     await getSingleIssue(issueId).then((res) => {
-    //         if(mounted) {
-    //             setIssueData(res)
-    //             console.log("res: " + JSON.stringify(issueData))
-    //         }
-    //     })
-    //     return () => mounted = false;
-    // }, [])
+    useEffect(async() =>  {
+        let  mounted = true;
+        await getSingleIssue(issueId).then((res) => {
+            if(mounted) {
+                setIssueData(res)
+                console.log("res: " + JSON.stringify(issueData))
+            }
+        })
+        return () => mounted = false;
+    }, [])
 
-//    const handleDelete = async (event) => {
-//        event.preventDefault();
-//        await deleteIssue(issueId);
-//        navigate("/", {replace: true})
-//    }
+   const handleDelete = async (event) => {
+       event.preventDefault();
+       await deleteIssue(issueId);
+       navigate("/", {replace: true})
+   }
 
     return (
         <>
             <div className="container">
             <h4>Issue Detail</h4>
             
-            {/* <table>
+            <table>
                 <thead>
                 </thead>
                 <tbody>
@@ -112,6 +112,7 @@ const ViewIssue = (props) => {
                 <div className="column column-25 column-offset-10">
                     <button 
                         className=" button"
+                        onClick={handleDelete}
                     >
                         Delete
                     </button>
@@ -144,7 +145,7 @@ const ViewIssue = (props) => {
                         </tbody>
                     
                 </table>
-            )} */}
+            )}
         </div>
         </>
     )
