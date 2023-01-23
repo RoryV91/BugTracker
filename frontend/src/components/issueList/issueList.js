@@ -26,7 +26,7 @@ const IssueList = () => {
 
     const handleDelete = async (event) => {
         event.preventDefault();
-        deleteIssue(event.target.id).then(() => { navigate("/", {replace: true})})
+        deleteIssue(event.target.id).then( navigate("/", {replace: true}))
        
     }
 
