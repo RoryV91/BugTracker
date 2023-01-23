@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { statusDescriptions, priorityLevels } from '../../utils/info'
 
 
-const ViewIssue = () => {
+const ViewIssue = (props) => {
     const navigate = useNavigate();
     let {issueId} = useParams()
     const [issueData, setIssueData] = useState({
@@ -20,8 +20,8 @@ const ViewIssue = () => {
     
     const [userData, setUserData] = useState(
         { 
-        userId: localStorage.getItem('userId'),
-        userGroup: localStorage.getItem('userGroup')
+            userId: localStorage.getItem('userId'),
+            userGroup: localStorage.getItem('userGroup')
         }
     )
     useEffect(async() =>  {
@@ -35,18 +35,18 @@ const ViewIssue = () => {
         return () => mounted = false;
     }, [])
 
-    const handleDelete = async (event) => {
-        event.preventDefault();
-        await deleteIssue(issueId);
-        navigate("/", {replace: true})
-    }
+//    const handleDelete = async (event) => {
+//        event.preventDefault();
+//        await deleteIssue(issueId);
+//        navigate("/", {replace: true})
+//    }
 
     return (
         <>
             <div className="container">
             <h4>Issue Detail</h4>
             
-            <table>
+            {/* <table>
                 <thead>
                 </thead>
                 <tbody>
@@ -144,8 +144,9 @@ const ViewIssue = () => {
                         </tbody>
                     
                 </table>
-            )}
-        </div></>
+            )} */}
+        </div>
+        </>
     )
 }
 
