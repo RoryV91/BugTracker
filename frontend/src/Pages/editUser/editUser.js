@@ -16,12 +16,15 @@ const EditUser = (props) => {
         verified: true
     });
     
+    const [initialPassword, setInitialPassword] = useState('')
+
     useEffect(() => {
         if (props.user.userGroup >= 1) {
             let  mounted = true;
             getSingleUser(userId).then((res) => {
                 if(mounted) {
                     setUserData(res)
+                    setInitialPassword(res.password)
                 }
             })
             return () => mounted = false;
@@ -36,6 +39,8 @@ const EditUser = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (userData.password == initialPassword) {
+            userData.password = '';
         await updateUser(userData, userId);
         navigate(`/userList`, {replace: true})
         }
