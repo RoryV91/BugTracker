@@ -41,6 +41,7 @@ const EditUser = (props) => {
         event.preventDefault();
         if (userData.password == initialPassword) {
             userData.password = '';
+        }
         await updateUser(userData, userId);
         navigate(`/userList`, {replace: true})
         }
