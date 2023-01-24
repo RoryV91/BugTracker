@@ -10,7 +10,6 @@ const EditUser = (props) => {
     const navigate = useNavigate(); 
     const [userData, setUserData] = useState({
         email: '',
-        password: '',
         firstName: '',
         lastName: '',
         userGroup: 0,
@@ -30,7 +29,7 @@ const EditUser = (props) => {
             
         }
     }, [])
-
+    
     const handleChange = (event) => {
         setUserData({...userData, [event.target.name]: event.target.value })
     }

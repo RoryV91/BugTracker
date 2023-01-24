@@ -33,7 +33,7 @@ const UserList = () => {
             .then((res) => {navigate(`/userList`, {replace: true})})
     }
 
-    const handleDelete = async (event) => {
+    const handleDelete = async (event, userId) => {
         event.preventDefault();
         await deleteUser(userId);
         navigate("/userList", {replace: true})
@@ -88,7 +88,7 @@ const UserList = () => {
                                         </Link>
                                     }
                                     <button
-                                        onClick={handleDelete}
+                                        onClick={handleDelete(event, userInfo._id)}
                                     >
                                         Delete
                                     </button>
