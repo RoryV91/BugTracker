@@ -36,7 +36,7 @@ const UserList = () => {
     const handleDelete = async (event) => {
         event.preventDefault();
         await deleteUser(event.target.id);
-        navigate("/userList", {replace: true})
+        getAllUsers().then((res) => {setUsers(res)});
     }
 
     return (
